@@ -1,0 +1,39 @@
+﻿@model Ictshop.Models.PhanQuyen
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="admin-content-main">
+    <div class="admin-content-main-header">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+        </nav>
+        <button class="btn btn-success">@Html.ActionLink("Add Product", "Create")</button>
+    </div>
+    <div class="admin-content-main-body">
+        <div>
+            <h4>Phân quyền</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    Tên quyền
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.TenQuyen)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.IDQuyen }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+</div>
+
+

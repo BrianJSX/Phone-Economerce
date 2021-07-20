@@ -1,0 +1,149 @@
+﻿@model PagedList.IPagedList<Ictshop.Models.Sanpham>
+
+@using PagedList.Mvc;
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="admin-content-main">
+    <div class="admin-content-main-header">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                @*
+                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                *@
+            </ol>
+        </nav>
+        <button class="btn btn-success">@Html.ActionLink("Thêm sản phẩm ", "Create")</button>
+    </div>
+    <div class="admin-content-main-body">
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Giá tiền
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Mô tả
+                </th>
+                <th>
+                    Thẻ sim
+                </th>
+                <th>
+                    Ảnh bìa
+                </th>
+                <th>
+                    Tên hãng
+                </th>
+                <th>
+                    Hệ điều hành
+                </th>
+                <th>
+                    Chip
+                </th>
+                <th> Độ phân giải </th>
+                <th>
+                    Màng hình
+                </th>
+                <th>
+                    Camera sau
+                </th>
+                <th>
+                    Camera trước
+                </th>
+                <th>
+                    Pin
+                </th>
+                <th>
+                    Giá chưa giảm
+                </th>
+                <th>
+                    Xuất sứ
+                </th>
+                <th>
+                    Ngày sản xuất
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Tensp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giatien)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soluong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Thesim)
+            </td>
+            <td>
+                <img src="@Url.Content("~/HinhanhSP/" +item.Anhbia)" width="50" height="50" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hangsanxuat.Tenhang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hedieuhanh.Tenhdh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.dophangiai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.chip)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.manghinh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cmrsau)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cmrtruoc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.giachuagiam)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.xuatsu)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ngayramat)
+            </td
+>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Masp })|
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.Masp }) |
+                @Html.ActionLink("Xoá", "Delete", new { id = item.Masp })
+            </td>
+                        </tr>
+            }
+
+        </table>
+    </div>
+    <div class="admin-content-main-paginate">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page }))
+    </div>
+</div>

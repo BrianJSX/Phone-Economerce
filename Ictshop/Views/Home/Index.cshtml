@@ -1,0 +1,48 @@
+﻿@{ ViewBag.Title = "ONIONDEV SHOP"; }
+
+
+
+<div class="spnoibat" style="margin-top: 10px; margin-left: 0px;" ;>
+    <div>
+        <div class="row" style="padding-top: 5px !important">
+            <div class="col-md-8">
+                <img src="~/HinhanhSP/mome1.png" class="img-responsive" alt="" />
+            </div>
+            <div class="col-md-4 row">
+                <div class="col-md-6">
+                    <img src="~/Content/banner/banner1.jpg" width="170" height="170" />
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Content/banner/banner2.jpg" width="170" height="170" />
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Content/banner/banner3.jpg" width="170" height="170" />
+                </div>
+                <div class="col-md-6">
+                    <img src="~/Content/banner/banner4.jpg" width="170" height="170" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="dt">
+    @Html.Action("dtsamsungpartial", "Sanpham")
+</div>
+
+<div class="dt">
+    @Html.Action("dtxiaomipartial", "Sanpham")
+</div>
+
+<div class="dt">
+    @Html.Action("dtiphonePartial", "Sanpham")
+</div>
+@*
+    <div class="danhmuc">
+        @Html.Action("DanhmucPartial", "Danhmuc")
+    </div>
+*@
+
+
+
+

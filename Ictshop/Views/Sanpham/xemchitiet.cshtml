@@ -1,0 +1,151 @@
+﻿@using Ictshop.Models
+@model Sanpham
+
+
+@{
+    ViewBag.Title = "xemchitiet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+
+<div class="product">
+    <div class="product-header">
+        <div class="product-header-name">
+            @Model.Tensp
+        </div>
+        <div class="Stars" style="--rating: 5; margin: 0 20px;" aria-label="Rating of this product is 2.3 out of 5."></div>
+        <div class="product-header-review">
+            100 đánh giá
+        </div>
+    </div>
+    <hr />
+    <div class="row product-content">
+        <div class="col-md-6 ">
+            <div class="product-content-img">
+                <img src="@Url.Content("~/HinhanhSP/" +@Model.Anhbia)" width="300px" />
+            </div>
+            <div class="product-header-maintenance row">
+                <div class="col-md-6">
+                    <i class="fas fa-handshake-slash"></i>
+                    Hư gì đổi nấy 12 tháng tại 2516 siêu thị toàn quốc (miễn phí tháng đầu)
+                </div>
+                <div class="col-md-6">
+                    <i class="fas fa-handshake-slash"></i>
+                    Bảo hành chính hãng điện thoại 1 năm
+                </div>
+                <div class="col-md-6" style="margin-top: 2rem">
+                    <i class="fas fa-handshake-slash"></i>
+                    Bộ sản phẩm gồm: Hộp, Sách hướng dẫn, Cáp Type C, Củ sạc nhanh rời đầu Type A, Cây lấy sim
+                </div>
+            </div>
+            <hr />
+            <b style="  font-size: 30px;"> Cấu hình của @Model.Tensp </b>
+            <div class="product-content-detail row">
+                <table class="table table-bordered">
+
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Màng hình </td>
+                        <td> @Model.manghinh  </td>
+                    </tr>
+                    <tr>
+                        <td>Độ phân giải</td>
+                        <td>@Model.dophangiai Pixels </td>
+                    </tr>
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Camera trước</td>
+                        <td>@Model.cmrtruoc MP </td>
+                    </tr>
+                    <tr>
+                        <td>Camera sau</td>
+                        <td>@Model.cmrsau MP </td>
+                    </tr>
+
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Chip</td>
+                        <td>@Model.chip </td>
+                    </tr>
+                    <tr>
+                        <td>Ram</td>
+                        <td>@Model.Ram GB </td>
+                    </tr>
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Thẻ sim</td>
+                        <td>@Model.Thesim Sim</td>
+                    </tr>
+                    <tr>
+                        <td>Bộ nhớ trong</td>
+                        <td>@Model.Bonhotrong GB</td>
+                    </tr>
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Pin</td>
+                        <td>@Model.pin mAh </td>
+                    </tr>
+                    <tr>
+                        <td>Xuất xứ</td>
+                        <td>@Model.xuatsu</td>
+                    </tr>
+                    <tr style="background-color: WhiteSmoke; ">
+                        <td>Ngày ra mắt </td>
+                        <td>@Model.ngayramat </td>
+                    </tr>
+                    <tr>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-content-ram">
+
+                <div class="product-content-bonho">
+                    <button class="btn btn-default"> @Model.Bonhotrong GB</button>
+                </div>
+            </div>
+            <div>
+                <class class="product-content-area">
+
+                    <b class="small">
+                        Giá tại:
+                    </b>
+                    <div>
+                        <a>  TP Hồ Chí Minh </a>
+                    </div>
+            </div>
+            <div class="product-content-price">
+
+                <div>
+                    <i> <s style="font-size: 20px; color: black; "><sub> @String.Format("{0:C2}", @Model.giachuagiam)   </sub></s></i>
+                </div>
+                <b style="font-size: 40px; color: red; "> @String.Format("{0:C2}", @Model.Giatien) </b> <p>VNĐ </p>
+                <br>
+            </div>
+            <div class="product-content-banner">
+                <img width="500rem" src="~/Content/images/banner_detail.png" />
+            </div>
+            <div class="product-content-action row">
+                @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = Model.Masp, @strURL = Request.Url.ToString() }))
+                {
+    <input width="100%" type="submit" value="Mua hàng " class="btn-cart col-md-12" />}
+                <br />
+                
+                <b style="font-size: 15px;margin-left: 10px; ">*Còn @Model.Soluong sản phẩm </b>
+            </div>
+            <hr style="font-size: 15px;color; " />
+            
+        </div>
+        <div>
+            <button class="btn-cart" type="button" onclick="alert('@Model.Mota')"> Mô tả sản phẩm</button>
+        </div>
+        <div>
+
+
+        </div>
+
+
+    </div>
+   
+
+   
+</div>
+
+

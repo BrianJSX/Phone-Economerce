@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - Điện thoại giá rẻ</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel=" stylesheet" href="~/Content/Style.css" />
+    <link rel=" stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @using Ictshop.Models
+</head>
+
+<body>
+   
+
+        @{ var u = Session["use"] as Ictshop.Models.Nguoidung; }
+       
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="col-md-12">
+                    <img src="~/Content/images/banner.png" />
+                </div>
+                <div class="col-md-12">
+                    <div class="row nav_main">
+                        <div class="col-sm-5 col-md-0" style="height:40px;margin-left:40px">
+                            <img src="~/HinhanhSP/8.png" class="img-responsive" alt="" />
+                        </div>
+                        <div class="col-sm-2 col-md-0" style="padding-bottom:5px;">
+                            <form class="form-inline">
+                                <input class="form-control mr-sm-2" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                            </form>
+                        </div>
+                        <div class="col-sm-2 col-md-0 nav_main_cart-icon">
+                            @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
+                        </div>
+                        @{ if (u != null)
+                            {
+                <div class="col-sm-2 col-md-0"></div>
+                                <div class="col-sm-6 col-md-0">
+                                    @u.Email
+                                    &nbsp;
+                                    <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
+                                </div> }
+                            else
+                            {
+                <div class="col-sm-2 col-md-0 nav_action">
+                    <a class="nav_action-button" href="/User/Dangky"> Đăng ký</a>
+                    &nbsp;
+                    <a class="nav_action-button" href="/User/Dangnhap"> Đăng nhập</a>
+                </div> } }
+                    </div>
+                </div>
+                <div class="container nav_buttom">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                       
+                        <ul class="nav navbar-nav" style="font-size: 1.8rem">
+                            @Html.Action("DanhmucPartial", "Danhmuc")
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container body-content">
+                @RenderBody()
+                <hr />
+            </div>
+            <hr />
+            <footer class="footer" style="padding-left:50px">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6">
+                        <span>454A Lê Văn Lương, Tân Phong, Quận 7, TPHCM</span>
+                        <br />
+                        <span>0344.387.371</span>
+                        <br />
+                        <span>Minhho.technology@gmail.com</span>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <span>Chính sách bảo dưỡng</span>
+                        <br />
+                        <span>Chính sách bảo hành</span>
+                        <br />
+                        <span>Một số luu ý khi mua hàng</span>
+                        <br />
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <span>Giới thiệu công ty</span>
+                        <br />
+                        <span>Tuyển dụng</span>
+                        <br />
+                        <span>Góp ý, khiếu nại</span>
+                        <br />
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <span>Mua trả góp</span>
+                        <br />
+                        <span>Cộng tác viên bán hàng </span>
+                        <br />
+                        <span>Lịch sử mua hàng</span>
+                        <br />
+                        <span>Giao hàng và thanh toán</span>
+
+                    </div>
+                </div>
+                <hr />
+            </footer>
+
+
+
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Ictshop.Models.Hangsanxuat>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="admin-content-main">
+    <div class="admin-content-main-header">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Library</li>
+            </ol>
+        </nav>
+        <button class="btn btn-success"> @Html.ActionLink("Thêm mới hãng", "Create")</button>
+    </div>
+    <div class="admin-content-main-body">
+        <table class="table">
+            <tr>
+
+                <th>
+                    Mã hãng
+                </th>
+                <th>
+                    Tên hãng
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Mahang)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tenhang)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.Mahang }) |
+                        @Html.ActionLink("Chi tiết", "Details", new { id = item.Mahang }) |
+                        @Html.ActionLink("Xoá", "Delete", new { id = item.Mahang })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

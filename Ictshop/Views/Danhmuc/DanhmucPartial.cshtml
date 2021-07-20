@@ -1,0 +1,15 @@
+﻿@using Ictshop.Models;
+@model List<Hangsanxuat>
+
+
+
+
+@foreach (var item in Model)
+{
+<li>
+    <a href="/Home/Index" title="dienthoai">
+        <span><i class="fas fa-mobile-alt"></i></span>
+        <span>@item.Tenhang</span>
+    </a>
+</li>
+}

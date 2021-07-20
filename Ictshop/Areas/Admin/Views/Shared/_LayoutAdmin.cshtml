@@ -1,0 +1,103 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Dashboard - SB Admin</title>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+    <link href="~/Content/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="">
+        <div class="header-admin">
+            <div class="header-admin-action">
+                <div class="dropdown show">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="/User/DangXuat">Đăng Xuất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-admin">
+            <div class="sidebar-admin-list">
+                <div class="sidebar-admin-logo">
+                    <img src="~/Content/images/logo.png" />
+                </div>
+                <div class="sidebar-admin-item">
+                    <div class="sidebar-admin-item_icon">
+                        <i class="fab fa-product-hunt"></i>
+                    </div>
+                    <div class="sidebar-admin-item_text">
+                        @Html.ActionLink("Sản phẩm", "Index", "Home")
+                    </div>
+                </div>
+                <div class="sidebar-admin-item">
+                    <div class="sidebar-admin-item_icon">
+                        <i class="fas fa-anchor"></i>
+                    </div>
+                    <div class="sidebar-admin-item_text">
+                        @Html.ActionLink("Hãng sản xuất", "Index", "Hangsanxuats")
+                    </div>
+
+                </div>
+                <div class="sidebar-admin-item">
+                    <div class="sidebar-admin-item_icon">
+                        <i class="fab fa-app-store-ios"></i>
+                    </div>
+                    <div class="sidebar-admin-item_text">
+                        @Html.ActionLink("Hệ điều hành", "Index", "Hedieuhanhs")
+                    </div>
+                </div>
+                <div class="sidebar-admin-item">
+                    <div class="sidebar-admin-item_icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="sidebar-admin-item_text">
+                        @Html.ActionLink("Người dùng", "Index", "Nguoidungs")
+                    </div>
+                </div>
+                <div class="sidebar-admin-item">
+                    <div class="sidebar-admin-item_icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="sidebar-admin-item_text">
+                        @Html.ActionLink("Phân quyền", "Index", "Phanquyens")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="admin-content">
+            <main>
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
