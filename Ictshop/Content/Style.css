@@ -148,6 +148,13 @@
     padding: 1rem 2rem;
     color: #fff;
 }
+
+.btn-description {
+    background-color: #c50000;
+    border: 0;
+    padding: 1rem 2rem;
+    color: #fff;
+}
 .btn-order {
     background-color: #E96D29;
     border: 0;

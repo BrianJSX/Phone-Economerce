@@ -2,10 +2,8 @@
 @model Sanpham
 
 
-@{
-    ViewBag.Title = "xemchitiet";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+@{ ViewBag.Title = "xemchitiet";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
 <br />
 
 <div class="product">
@@ -44,7 +42,7 @@
                 <table class="table table-bordered">
 
                     <tr style="background-color: WhiteSmoke; ">
-                        <td>Màng hình </td>
+                        <td>Màn hình </td>
                         <td> @Model.manghinh  </td>
                     </tr>
                     <tr>
@@ -112,7 +110,6 @@
                     </div>
             </div>
             <div class="product-content-price">
-
                 <div>
                     <i> <s style="font-size: 20px; color: black; "><sub> @String.Format("{0:C2}", @Model.giachuagiam)   </sub></s></i>
                 </div>
@@ -127,25 +124,31 @@
                 {
     <input width="100%" type="submit" value="Mua hàng " class="btn-cart col-md-12" />}
                 <br />
-                
+
                 <b style="font-size: 15px;margin-left: 10px; ">*Còn @Model.Soluong sản phẩm </b>
             </div>
-            <hr style="font-size: 15px;color; " />
-            
+            <div class="row">
+                <div style="display: flex; justify-content: center">
+                    <button class="btn-description description-button-click" type="button"> Mô tả sản phẩm</button>
+                </div>
+                <div class="description" style="padding: 20px; margin: 20px;">
+                    @Model.Mota
+                </div>
+            </div>
         </div>
-        <div>
-            <button class="btn-cart" type="button" onclick="alert('@Model.Mota')"> Mô tả sản phẩm</button>
-        </div>
-        <div>
-
-
-        </div>
-
 
     </div>
-   
-
-   
 </div>
+@section Scripts
+{
+   <script>
+       $(document).ready(function () {
+           $(".description-button-click").click(function () {
+               console.log("ok")
+               $(".description").toggle();
+           });
+       });
+    </script>
+}
 
 

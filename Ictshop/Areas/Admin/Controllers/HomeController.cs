@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,7 +24,7 @@ namespace Ictshop.Areas.Admin.Controllers
             }
 
             if (page == null) page = 1;
-            var sp = db.Sanphams.OrderBy(x => x.Masp);
+            var sp = db.Sanphams.OrderByDescending(x => x.Masp);
             int pageSize = 5;
             int pageNumber = (page ?? 1);
             return View(sp.ToPagedList(pageNumber, pageSize));
@@ -55,21 +56,33 @@ namespace Ictshop.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(Sanpham sanpham)
+        public ActionResult Create(Sanpham sanpham, HttpPostedFileBase file)
         {
             var u = Session["use"] as Ictshop.Models.Nguoidung;
+           
             if (session.checkRoleAdmin(u))
             {
                 return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
             }
             try
-            { 
+            {
+                if (file.ContentLength > 0)
+                {
+                    var filename = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/HinhanhSP"), filename);
+                    sanpham.Anhbia = filename;
+                    file.SaveAs(path);
+                }
                 db.Sanphams.Add(sanpham);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
+                var hangselected = new SelectList(db.Hangsanxuats, "Mahang", "Tenhang");
+                ViewBag.Mahang = hangselected;
+                var hdhselected = new SelectList(db.Hedieuhanhs, "Mahdh", "Tenhdh");
+                ViewBag.Mahdh = hdhselected;
                 return View();
             }
         }

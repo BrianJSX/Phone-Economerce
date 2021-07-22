@@ -97,7 +97,7 @@ namespace Ictshop.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("GioHang");
+            return RedirectToAction("SuaGioHang");
         }
         //Xây dựng trang giỏ hàng
         public ActionResult GioHang()
@@ -107,6 +107,7 @@ namespace Ictshop.Controllers
                 return RedirectToAction("Index", "Home");
             }
             List<GioHang> lstGioHang = LayGioHang();
+            ViewBag.TongTien = TongTien();
             return View(lstGioHang);
         }
         //Tính tổng số lượng và tổng tiền
@@ -154,6 +155,11 @@ namespace Ictshop.Controllers
             return View(lstGioHang);
 
         }
+        public ActionResult DatHangThanhCong()
+        {
+            return View();
+        }
+
 
         #region Đặt hàng
         //Xây dựng chức năng đặt hàng
@@ -171,11 +177,16 @@ namespace Ictshop.Controllers
                 RedirectToAction("Index", "Home");
             }
             //Thêm đơn hàng
-            Donhang ddh = new Donhang();
             Nguoidung kh = (Nguoidung)Session["use"];
+
+            var ddh = new Donhang()
+            {
+                MaNguoidung = kh.MaNguoiDung,
+                Ngaydat = DateTime.Now,
+                Tinhtrang = 0
+            };
+
             List<GioHang> gh = LayGioHang();
-            ddh.MaNguoidung = kh.MaNguoiDung;
-            ddh.Ngaydat = DateTime.Now;
             db.Donhangs.Add(ddh);
             db.SaveChanges();
             //Thêm chi tiết đơn hàng
@@ -189,7 +200,8 @@ namespace Ictshop.Controllers
                 db.Chitietdonhangs.Add(ctDH);
             }
             db.SaveChanges();
-            return RedirectToAction("Index", "Home");
+            gh.Clear();
+            return RedirectToAction("DatHangThanhCong");
         }
         #endregion
 

@@ -50,33 +50,36 @@
                 <th>
                     Chip
                 </th>
-                <th> Độ phân giải </th>
-                <th>
-                    Màng hình
-                </th>
-                <th>
-                    Camera sau
-                </th>
-                <th>
-                    Camera trước
-                </th>
-                <th>
-                    Pin
-                </th>
-                <th>
-                    Giá chưa giảm
-                </th>
-                <th>
-                    Xuất sứ
-                </th>
-                <th>
-                    Ngày sản xuất
-                </th>
+                @*
+                    <th> Độ phân giải </th>
+                    <th>
+                        Màng hình
+                    </th>
+                    <th>
+                        Camera sau
+                    </th>
+                    <th>
+                        Camera trước
+                    </th>
+                    <th>
+                        Pin
+                    </th>
+                    <th>
+                        Giá chưa giảm
+                    </th>
+                    <th>
+                        Xuất sứ
+                    </th>
+                    <th>
+                        Ngày sản xuất
+                    </th>
+                *@
+
             </tr>
 
             @foreach (var item in Model)
             {
-            <tr>
+        <tr>
 
             <td>
                 @Html.DisplayFor(modelItem => item.Tensp)
@@ -102,40 +105,43 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Hedieuhanh.Tenhdh)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.dophangiai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.chip)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.manghinh)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cmrsau)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.cmrtruoc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.pin)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.giachuagiam)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.xuatsu)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ngayramat)
-            </td
->
+            @*
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dophangiai)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.chip)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.manghinh)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cmrsau)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.cmrtruoc)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.pin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.giachuagiam)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.xuatsu)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ngayramat)
+                    </td
+        >
+            *@
+
             <td>
                 @Html.ActionLink("Sửa", "Edit", new { id = item.Masp })|
                 @Html.ActionLink("Chi tiết", "Details", new { id = item.Masp }) |
                 @Html.ActionLink("Xoá", "Delete", new { id = item.Masp })
             </td>
-                        </tr>
+        </tr>
             }
 
         </table>

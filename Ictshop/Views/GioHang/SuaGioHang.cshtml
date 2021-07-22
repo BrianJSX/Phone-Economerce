@@ -1,12 +1,15 @@
 ﻿@using Ictshop.Models;
 @model List<GioHang>
 
-@{
-    ViewBag.Title = "GioHang";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<center><h3 class="text-info"> Giỏ Hàng </h3></center>
+@{ ViewBag.Title = "GioHang";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
 
+<div class="cart">
+    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem">
+        Sửa Giỏ Hàng
+    </div>
+</div>
+<hr />
 <table class="table-bordered font-italic divGioHang">
     <tr>
         <th> Mã SP</th>
@@ -22,40 +25,41 @@
         <th> Thành tiền</th>
     </tr>
 
-
-
     @foreach (var item in Model)
     {
-<tr>
-    <td> @item.iMasp</td>
+        <tr>
+            <td> @item.iMasp</td>
 
-    <td> @item.sTensp</td>
+            <td> @item.sTensp</td>
 
-    <td> <img src="@Url.Content("~/HinhanhSP/" +item.sAnhBia)" width="50" height="50" /></td>
+            <td> <img src="@Url.Content("~/HinhanhSP/" +item.sAnhBia)" width="50" height="50" /></td>
 
-    <td>  @String.Format("{0:0,0}", item.dDonGia) VNĐ</td>
-    @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @iMaSP = item.iMasp }))
-    {
-        <td>@Html.TextBox("txtSoLuong", item.iSoLuong) </td>
-
-        <td>@String.Format("{0:0,0}", item.ThanhTien) VNĐ</td>
-        <td colspan="9">
-            <input type="submit" value="Cập nhật" class="btn btn-success" />
-            <br />
-            <button class="btn btn-danger">@Html.ActionLink("Xóa", "XoaGioHang", new { @iMaSP = item.iMasp })</button>
-        </td>
-    }
-</tr>
+            <td>  @String.Format("{0:0,0}", item.dDonGia) VNĐ</td>
+        @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @iMaSP = item.iMasp }))
+        {
+            <td>@Html.TextBox("txtSoLuong", item.iSoLuong) </td>
+            <td>@String.Format("{0:0,0}", item.ThanhTien) VNĐ</td>
+            <td colspan="12">
+                <div style="display: flex; align-items: center">
+                    <div style="margin-right: 10px">
+                        <input type="submit" value="Cập nhật" class="btn btn-success" />
+                    </div>
+                    <div>
+                        <button class="btn btn-danger btn-removeCart">@Html.ActionLink("Xóa", "XoaGioHang", new { @iMaSP = item.iMasp })</button>
+                    </div>
+                </div>
+            </td>   
+          }
+        </tr>
     }
 </table>
 
 @*Css giỏ hàng*@
 <style type="text/css">
-    .divGioHang {
-        border: 2px solid #EEEEEE;
-        margin-left: 10%;
-        font-size: large
-    }
+        .divGioHang {
+            border: 2px solid #EEEEEE;
+            margin-left: 10%;
+        }
 
         .divGioHang td {
             padding: 10px;
@@ -65,5 +69,9 @@
 
         .divGioHang th {
             text-align: center
+        }
+        .btn-removeCart a {
+            color: #fff;
+
         }
 </style>

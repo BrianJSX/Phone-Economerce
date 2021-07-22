@@ -16,7 +16,7 @@
         <button class="btn btn-success">@Html.ActionLink("Add Product", "Create")</button>
     </div>
     <div class="admin-content-main-body">
-        @using (Html.BeginForm()) { 
+        @using (Html.BeginForm("Create", "Home", FormMethod.Post, new { enctype = "multipart/form-data" })) { 
         
             @Html.AntiForgeryToken()
 
@@ -93,7 +93,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Anhbia, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Anhbia, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="file" value="" name="file" id="file" required title="chọn hình" />
                     @Html.ValidationMessageFor(model => model.Anhbia, "", new { @class = "text-danger" })
                 </div>
             </div>
