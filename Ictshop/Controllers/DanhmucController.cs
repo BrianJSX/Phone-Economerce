@@ -16,5 +16,10 @@ namespace Ictshop.Controllers
             var category = db.Hangsanxuats.ToList();
             return PartialView(category);
         }
+        public ActionResult List(int? id)
+        {
+            var danhmuc = db.Sanphams.Where(n => n.Mahang == id).ToList();
+            return View(danhmuc);
+        }
     }
 }

@@ -23,7 +23,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="row nav_main">
-                        <div class="col-sm-5 col-md-0" style="height:40px;margin-left:40px">
+                        <div class="col-sm-4 col-md-0" style="height:40px;margin-left:40px">
                             <img src="~/HinhanhSP/8.png" class="img-responsive" alt="" />
                         </div>
                         <div class="col-sm-2 col-md-0" style="padding-bottom:5px;">
@@ -31,24 +31,27 @@
                                 <input class="form-control mr-sm-2" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
                             </form>
                         </div>
-                        <div class="col-sm-2 col-md-0 nav_main_cart-icon">
+                        <div class="col-sm-3 col-md-0 nav_main_cart-icon">
                             @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
                         </div>
                         @{ if (u != null)
                             {
-                <div class="col-sm-2 col-md-0"></div>
-                                <div class="col-sm-6 col-md-0">
+                                <div class="col-sm-2 col-md-0"></div>
+                                <div class="col-sm-4 col-md-0">
                                     @u.Email
                                     &nbsp;
                                     <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
-                                </div> }
+                                </div> 
+                            }
                             else
                             {
-                <div class="col-sm-2 col-md-0 nav_action">
-                    <a class="nav_action-button" href="/User/Dangky"> Đăng ký</a>
-                    &nbsp;
-                    <a class="nav_action-button" href="/User/Dangnhap"> Đăng nhập</a>
-                </div> } }
+                            <div class="col-sm-2 col-md-0 nav_action">
+                                <a class="nav_action-button" href="/User/Dangky"> Đăng ký</a>
+                                &nbsp;
+                                <a class="nav_action-button" href="/User/Dangnhap"> Đăng nhập</a>
+                            </div> 
+                            } 
+                          }
                     </div>
                 </div>
                 <div class="container nav_buttom">
@@ -62,6 +65,12 @@
                     <div class="navbar-collapse collapse">
                        
                         <ul class="nav navbar-nav" style="font-size: 1.8rem">
+                            <li>
+                                <a href="/Home/Index" title="dienthoai">
+                                    <span><i class="fas fa-home"></i></span>
+                                    <span>Trang Chủ</span>
+                                </a>
+                            </li>
                             @Html.Action("DanhmucPartial", "Danhmuc")
                         </ul>
                     </div>

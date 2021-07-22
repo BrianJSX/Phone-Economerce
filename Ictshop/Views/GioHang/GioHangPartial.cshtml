@@ -1,4 +1,15 @@
 ﻿
-<a href="@Url.Action("GioHang","GioHang")" class="nav_main_cart" >Giỏ Hàng <i class="fa fa-shopping-cart">
-        </i> <span class="nav_main_cart-amount">@ViewBag.TongSoLuong</span> </a>
+<a href="@Url.Action("GioHang","GioHang")" class="nav_main_cart" >Giỏ Hàng | 
+    <i class="fa fa-shopping-cart">
+    </i> <span class="nav_main_cart-amount">
+        @{
+            if(ViewBag.TongTien == null)
+            {
+                 @ViewBag.TongSoLuong
+            }else
+            {
+                @String.Format("{0:C2}", @ViewBag.TongTien)
+            }
+        }
+    </span> </a>
 

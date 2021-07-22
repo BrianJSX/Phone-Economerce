@@ -41,8 +41,12 @@ namespace Ictshop.Controllers
    
         public ActionResult Dangnhap()
         {
-            return View();
-
+            var u = Session["use"] as Ictshop.Models.Nguoidung;
+            if(u  == null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]

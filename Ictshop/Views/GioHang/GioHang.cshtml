@@ -5,69 +5,82 @@
     ViewBag.Title = "GioHang";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    <h3 class=""> GIỎ HÀNG</h3>
-<br />
-<table class="table-hover table-bordered divGioHang">
-    <tr style="">
-        <th> Mã SP</th>
 
-        <th> Tên SP</th>
+<div class="cart">
+    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem">
+        Giỏ Hàng Của Bạn
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <table class="table-hover table-bordered divGioHang">
+            <tr style="">
+                <th> Mã SP</th>
+                <th> Tên SP</th>
+                <th> Ảnh bìa</th>
+                <th> Đơn giá</th>
+                <th> Số lượng</th>
+                <th> Thành tiền</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr class="font-italic">
+                    <td> @item.iMasp</td>
 
-        <th> Ảnh bìa</th>
+                    <td> @item.sTensp</td>
 
-        <th> Đơn giá</th>
+                    <td> <img src="@Url.Content("~/HinhanhSP/" +item.sAnhBia)" width="50" height="50" /></td>
 
-        <th> Số lượng</th>
+                    <td>  @String.Format("{0:0,0}", item.dDonGia) VNĐ</td>
 
-        <th> Thành tiền</th>
-    </tr>
+                    <td> @item.iSoLuong</td>
 
-
-
-    @foreach (var item in Model)
-    {
-        <tr class="font-italic">
-            <td> @item.iMasp</td>
-
-            <td> @item.sTensp</td>
-
-            <td> <img src="@Url.Content("~/HinhanhSP/" +item.sAnhBia)" width="50" height="50" /></td>
-
-            <td>  @String.Format("{0:0,0}", item.dDonGia) VNĐ</td>
-
-            <td> @item.iSoLuong</td>
-
-            <td>   @String.Format("{0:0,0}", item.ThanhTien) VNĐ</td>
-
-
-        </tr>
-
-    }
-
-   
-
-<tr>
-    <td colspan="6" style="text-align:right">
-
-        @Html.ActionLink("Chỉnh sửa giỏ hàng", "SuaGioHang")
-    </td>
-    <td colspan="6" style="text-align:right;color:blue">
-        @using (Html.BeginForm("DatHang", "GioHang",new { @class=""}))
-        {
-            <input type="submit" value="Đặt hàng" class="btn-order" />
-        }
-    </td>
-</tr>
-</table>
+                    <td>   @String.Format("{0:0,0}", item.ThanhTien) VNĐ</td>
+                </tr>
+            }
+            <tr>
+                <td colspan="6" style="text-align:right">
+                    @Html.ActionLink("Chỉnh sửa giỏ hàng", "SuaGioHang")
+                </td>
+              
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <div class="order">
+            <h1>Đơn Hàng Của Bạn</h1>
+            <ul class="order_footer">
+                <li>
+                    <span>Số tiền tạm tính</span>
+                    <span>@String.Format("{0:0,0}", @ViewBag.TongTien)</span>
+                </li>
+                <li>
+                    <span>Phí Ship</span>
+                    <span>Miễn Phí</span>
+                </li>
+                <li>
+                    <span>Tổng số tiền (Incl. VAT)</span>
+                    <span>@String.Format("{0:0,0}", @ViewBag.TongTien)</span>
+                </li>
+            </ul>
+            <div style="display: flex; justify-content: center">
+                @using (Html.BeginForm("DatHang", "GioHang", new { @class = "" }))
+                {
+                    <input type="submit" value="Thanh Toán Ngay" class="checkout" />           
+                }
+            </div>
+          
+        </div>
+    </div>
+</div>
 
 @*Css giỏ hàng*@
 <style type="text/css">
-    .divGioHang {
-        border: 2px solid #EEEEEE;
-        margin-left: 10%;
-        font-size:large
-    }
-
+        .divGioHang {
+            border: 2px solid #EEEEEE;
+            margin-left: 10%;
+        }
         .divGioHang td {
             padding: 10px;
             border: 2px solid #EEEEEE;
@@ -76,4 +89,61 @@
         .divGioHang th{
             text-align:center
         }
+        .order {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding: 10px;
+            max-width: 350px;
+            width: 100%;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        .order h1 {
+            text-align: center;
+            font-size: 21px;
+            margin-bottom: 30px;
+        }
+
+        
+        .order_footer {
+            padding-left: 0px;
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .order_footer li {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .order_footer li + li {
+            margin-top: 10px;
+        }
+
+        .order_footer li:last-child span {
+            font-weight: bold;
+        }
+
+        .order .checkout{
+            display:flex;
+            padding: 20px 20px;
+            border-radius: 5px;
+            background-color: #7c66f7;
+            color: white;
+            border: none;
+        }
+
 </style>
