@@ -31,12 +31,13 @@
         </div>
         <div class="col-md-12">
             <div class="row nav_main">
-                <div class="col-sm-4 col-md-0" style="height:40px;margin-left:40px">
+                <div class="col-sm-3 col-md-0" style="height:40px;margin-left:40px">
                     <img src="~/HinhanhSP/bieutuong9.png" class="img-responsive" alt="" />
                 </div>
-                <div class="col-sm-2 col-md-0" style="padding-bottom:5px;">
-                    <form class="form-inline">
-                        <input class="form-control mr-sm-2" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                <div class="col-sm-4 col-md-0" style="padding-bottom:5px;">
+                    <form class="form-inline" action="/Home/Search" method="get">
+                        <input class="form-control mr-sm-2" name="key" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                        <input class="btn btn-default" value="Tìm kiếm" type="submit">
                     </form>
                 </div>
                 <div class="col-sm-3 col-md-0 nav_main_cart-icon">
