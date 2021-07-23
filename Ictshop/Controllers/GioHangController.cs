@@ -102,7 +102,9 @@ namespace Ictshop.Controllers
         //Xây dựng trang giỏ hàng
         public ActionResult GioHang()
         {
-            if (Session["GioHang"] == null)
+            List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
+
+            if (listGioHang.Count == 0)
             {
                 return RedirectToAction("Index", "Home");
             }

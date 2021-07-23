@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\DonhangsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HangsanxuatsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HedieuhanhsController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -310,6 +311,13 @@
     <Content Include="Areas\Admin\Views\PhanQuyens\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\PageNotFound\NotFound.cshtml" />
+    <Content Include="Areas\Admin\Views\DonDatHangs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Donhangs\ChiTietDonHang.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

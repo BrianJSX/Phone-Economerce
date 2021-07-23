@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Ictshop.Models.Chitietdonhang>
+
+@{
+    ViewBag.Title = "ChiTietDonHang";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="admin-content-main">
+    <div class="admin-content-main-header">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+            </ol>
+        </nav>
+        <button class="btn btn-primary"> << @Html.ActionLink("Quay lại đơn hàng", "Index")</button>
+    </div>
+    <div class="admin-content-main-body">
+        <table class="table">
+            <tr>
+                <th>
+                    Tên Sản Phẩm
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Đơn giá
+                </th>
+                <th>
+                    Mã đơn hàng
+                </th>
+                <th>
+                    Ảnh đại diện
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sanpham.Tensp)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Soluong)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Dongia)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Donhang.Madon)
+                    </td>
+                    <td>
+                        <img src="~/HinhanhSP/@item.Sanpham.Anhbia" width="120px" />
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
