@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Ictshop.Models.Donhang>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="admin-content-main">
+    <div class="admin-content-main-header">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+            </ol>
+        </nav>
+        <button class="btn btn-primary"> << @Html.ActionLink("Quay về trang chủ ", "Index", "Home")</button>
+    </div>
+    <div class="admin-content-main-body">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Ngaydat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tinhtrang)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nguoidung.Hoten)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ngaydat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tinhtrang)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Chi tiết đơn hàng", "ChiTietDonHang", new { id = item.Madon }) |
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
