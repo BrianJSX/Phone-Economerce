@@ -5,8 +5,8 @@
                 Layout = "~/Views/Shared/_Layout.cshtml"; }
 
 <div class="cart">
-    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem">
-        Sửa Giỏ Hàng
+    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem; align-items: center">
+        <div style="font-size: 2rem">Sửa Giỏ Hàng Của Bạn</div>
     </div>
 </div>
 <hr />
@@ -37,7 +37,7 @@
             <td>  @String.Format("{0:0,0}", item.dDonGia) VNĐ</td>
         @using (Html.BeginForm("CapNhatGioHang", "GioHang", new { @iMaSP = item.iMasp }))
         {
-            <td>@Html.TextBox("txtSoLuong", item.iSoLuong) </td>
+            <td>@Html.TextBox("txtSoLuong", item.iSoLuong, new { @type = "number" , @class = "form-control"}) </td>
             <td>@String.Format("{0:0,0}", item.ThanhTien) VNĐ</td>
             <td colspan="12">
                 <div style="display: flex; align-items: center">
@@ -53,7 +53,9 @@
         </tr>
     }
 </table>
-
+<div style="margin: 2rem; font-size: 1.6rem">
+    @Html.ActionLink(" << Ấn để quay lại giỏ hàng", "GioHang")
+</div>
 @*Css giỏ hàng*@
 <style type="text/css">
         .divGioHang {

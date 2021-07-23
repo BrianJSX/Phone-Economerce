@@ -207,45 +207,47 @@ namespace Ictshop.Controllers
 
         public ActionResult ThanhToanMomo()
         {
-            if (Session["use"] == null || Session["use"].ToString() == "")
+            if(TongTien() <= 50000000)
             {
-                return RedirectToAction("Dangnhap", "User");
-            }
-            //Kiểm tra giỏ hàng
-            if (Session["GioHang"] == null)
-            {
-                RedirectToAction("Index", "Home");
-            }
+                if (Session["use"] == null || Session["use"].ToString() == "")
+                {
+                    return RedirectToAction("Dangnhap", "User");
+                }
+                //Kiểm tra giỏ hàng
+                if (Session["GioHang"] == null)
+                {
+                    RedirectToAction("Index", "Home");
+                }
 
-            List<GioHang> gh = LayGioHang();
-            string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
-            string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
-            string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
-            string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
-            string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
-            string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
-            string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
-            
-            string amount = TongTien().ToString();
-            string orderid = Guid.NewGuid().ToString();
-            string requestId = Guid.NewGuid().ToString();
-            string extraData = "";
+                List<GioHang> gh = LayGioHang();
+                string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
+                string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
+                string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
+                string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
+                string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
+                string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
+                string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
 
-            string rawHash = "partnerCode=" +
-                partnerCode + "&accessKey=" +
-                accessKey + "&requestId=" +
-                requestId + "&amount=" +
-                amount + "&orderId=" +
-                orderid + "&orderInfo=" +
-                orderInfo + "&returnUrl=" +
-                returnUrl + "&notifyUrl=" +
-                notifyurl + "&extraData=" +
-                extraData;
+                string amount = TongTien().ToString();
+                string orderid = Guid.NewGuid().ToString();
+                string requestId = Guid.NewGuid().ToString();
+                string extraData = "";
 
-            MoMoSecurity Cryto = new MoMoSecurity();
-            string signature = Cryto.signSHA256(rawHash, serectKey);
+                string rawHash = "partnerCode=" +
+                    partnerCode + "&accessKey=" +
+                    accessKey + "&requestId=" +
+                    requestId + "&amount=" +
+                    amount + "&orderId=" +
+                    orderid + "&orderInfo=" +
+                    orderInfo + "&returnUrl=" +
+                    returnUrl + "&notifyUrl=" +
+                    notifyurl + "&extraData=" +
+                    extraData;
 
-            JObject message = new JObject
+                MoMoSecurity Cryto = new MoMoSecurity();
+                string signature = Cryto.signSHA256(rawHash, serectKey);
+
+                JObject message = new JObject
             {
                 { "partnerCode", partnerCode },
                 { "accessKey", accessKey },
@@ -261,9 +263,11 @@ namespace Ictshop.Controllers
 
             };
 
-            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
-            JObject jmessage = JObject.Parse(responseFromMomo);
-            return Redirect(jmessage.GetValue("payUrl").ToString());
+                string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+                JObject jmessage = JObject.Parse(responseFromMomo);
+                return Redirect(jmessage.GetValue("payUrl").ToString());
+            }
+            return RedirectToAction("GioHang");
         }
 
         public ActionResult DatHangThanhCong()
