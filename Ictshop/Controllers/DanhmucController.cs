@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Ictshop.Models;
+using PagedList;
 
 namespace Ictshop.Controllers
 {
@@ -16,10 +17,14 @@ namespace Ictshop.Controllers
             var category = db.Hangsanxuats.ToList();
             return PartialView(category);
         }
-        public ActionResult List(int? id)
+        public ActionResult List(int? id, int? page)
         {
-            var danhmuc = db.Sanphams.Where(n => n.Mahang == id).ToList();
-            return View(danhmuc);
+            if (page == null) page = 1;
+            var danhmuc = db.Sanphams.Where(n => n.Mahang == id).OrderByDescending(n => n.Masp);
+            int pageSize = 4;
+            int pageNumber = (page ?? 1);
+            ViewBag.id = id;
+            return View(danhmuc.ToPagedList(pageNumber, pageSize));
         }
     }
 }
