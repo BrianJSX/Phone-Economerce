@@ -8,8 +8,8 @@
     <div class="admin-content-main-header">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Xóa Sản phẩm</li>
             </ol>
         </nav>
     </div>
@@ -108,31 +108,57 @@
                 <dt>
                     @Html.DisplayNameFor(model => model.dophangiai)
                 </dt>
-
+                <dd>
+                    @Html.DisplayFor(model => model.dophangiai)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.chip)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.chip)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.cmrtruoc)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.cmrtruoc)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.cmrsau)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.cmrsau)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.manghinh)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.manghinh)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.pin)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.pin)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.giachuagiam)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.giachuagiam)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.xuatsu)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.xuatsu)
+                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.ngayramat)
                 </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.ngayramat)
+                </dd>
 
             </dl>
 
@@ -141,7 +167,7 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-warning" /> |
+                    <input type="submit" value="Xóa" class="btn btn-warning" /> |
                     @Html.ActionLink("Về trang chủ", "Index")
                 </div>
             }

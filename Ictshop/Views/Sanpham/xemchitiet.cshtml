@@ -20,8 +20,11 @@
     <div class="row product-content">
         <div class="col-md-6 ">
             <div class="product-content-img">
-                <img src="@Url.Content("~/HinhanhSP/" +@Model.Anhbia)" width="300px" />
+
+                @*<img src="~/HinhanhSP/frame17-7.png" width="430px"style="margin-top:-30px;" alt="" />*@
+                <img src="@Url.Content("~/HinhanhSP/" +@Model.Anhbia)"  width="300px" />
             </div>
+            
             <div class="product-header-maintenance row">
                 <div class="col-md-6">
                     <i class="fas fa-handshake-slash"></i>
@@ -86,10 +89,11 @@
                         <td>Ngày ra mắt </td>
                         <td>@Model.ngayramat </td>
                     </tr>
-                    <tr>
-                    </tr>
+
 
                 </table>
+                <hr />
+
             </div>
         </div>
         <div class="col-md-6">
@@ -113,31 +117,76 @@
                 <div>
                     <i> <s style="font-size: 20px; color: black; "><sub> @String.Format("{0:C2}", @Model.giachuagiam)   </sub></s></i>
                 </div>
-                <b style="font-size: 40px; color: red; "> @String.Format("{0:C2}", @Model.Giatien) </b> <p>VNĐ </p>
+                <b style="font-size: 40px; color: red; "> @String.Format("{0:C2}", @Model.Giatien) </b>
                 <br>
             </div>
             <div class="product-content-banner">
-                <img width="500rem" src="~/Content/images/banner_detail.png" />
+                <img width="400px;" src="~/HinhanhSP/promo17-71.png" />
             </div>
             <div class="product-content-action row">
                 @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = Model.Masp, @strURL = Request.Url.ToString() }))
                 {
-    <input width="100%" type="submit" value="Mua hàng " class="btn-cart col-md-12" />}
+                    <input width="100%" type="submit" value="Mua hàng " class="btn-cart col-md-12" />}
                 <br />
 
                 <b style="font-size: 15px;margin-left: 10px; ">*Còn @Model.Soluong sản phẩm </b>
             </div>
-            <div class="row">
-                <div style="display: flex; justify-content: center">
-                    <button class="btn-description description-button-click" type="button"> Mô tả sản phẩm</button>
-                </div>
-                <div class="description" style="padding: 20px; margin: 20px;">
-                    @Model.Mota
-                </div>
+            @*<div class="row">
+            <div style="display: flex; justify-content: center">
+                <button class="btn-description description-button-click" type="button"> Mô tả sản phẩm</button>
             </div>
-        </div>
+            <div class="description" style="padding: 20px; margin: 20px;">
+                @Model.Mota
+            </div>
+        </div>*@
+            <div>
+                <b>Nhận ngay ưu đãi đặc biệt</b>
+                <br />
+                <span> ✔ Thu cũ đổi mới - Trợ giá ngay 15% <a>Xem chi tiết</a></span>
+                <br />
+                <span>✔ Trả góp 0%</span>
+                <br />
+                <span>✔ Tặng gói iCloud 50GB đến 15 tháng(Chỉ Iphone)</span>
+                <br />
+                <span>✔ Tặng Bảo hành 2 năm chính hãng</span>
+                <br />
+                <span>✔ Phụ Kiện giảm đến 40% khi mua kèm máy <a>Xem chi tiết</a></span>
+                <br />
+                <span>✔ Giảm đến 300.000đ khi mua bảo hành (rơi vỡ + vào nước) kèm máy <a>Xem chi tiết</a></span>
+                <hr />
+            </div>
+            <b style="  font-size: 30px;"> Đặc điểm nổi bật của @Model.Tensp:</b><br />
+            <table>
+                <tr>
+                    <th style="  font-size: 20px;">@Model.Mota</th>
 
-    </div>
+                </tr>
+
+            </table>
+           
+            </div>
+                <style>
+                    .chen {
+                        color: #fff;
+                        position: absolute;
+                        top: 10px
+                    }
+
+                    table {
+                        font-family: arial, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                    td, th {
+                        border: 15px solid #a6a6a6;
+                        text-align: center;
+                        padding: 20px;
+                    }
+                </style>
+            </div>
+
+        </div>
 </div>
 @section Scripts
 {

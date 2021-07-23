@@ -1,6 +1,14 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <style>
+        body {
+            background-image: url('https://i.pinimg.com/originals/c8/cb/23/c8cb23dc08a1751bbd1b1504ad7d95f8.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+    </style>
     <meta charset="utf-8" />
     <title>@ViewBag.Title - Điện thoại giá rẻ</title>
     @Styles.Render("~/Content/css")
@@ -13,118 +21,141 @@
 </head>
 
 <body>
-   
 
-        @{ var u = Session["use"] as Ictshop.Models.Nguoidung; }
-       
-            <div class="navbar navbar-inverse navbar-fixed-top">
-                <div class="col-md-12">
-                    <img src="~/Content/images/banner.png" />
+
+    @{ var u = Session["use"] as Ictshop.Models.Nguoidung; }
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="col-md-12">
+            <img src="~/Content/images/banner.png" />
+        </div>
+        <div class="col-md-12">
+            <div class="row nav_main">
+                <div class="col-sm-4 col-md-0" style="height:40px;margin-left:40px">
+                    <img src="~/HinhanhSP/bieutuong9.png" class="img-responsive" alt="" />
                 </div>
-                <div class="col-md-12">
-                    <div class="row nav_main">
-                        <div class="col-sm-4 col-md-0" style="height:40px;margin-left:40px">
-                            <img src="~/HinhanhSP/8.png" class="img-responsive" alt="" />
-                        </div>
-                        <div class="col-sm-2 col-md-0" style="padding-bottom:5px;">
-                            <form class="form-inline">
-                                <input class="form-control mr-sm-2" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
-                            </form>
-                        </div>
-                        <div class="col-sm-3 col-md-0 nav_main_cart-icon">
-                            @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
-                        </div>
-                        @{ if (u != null)
-                            {
-                                <div class="col-sm-2 col-md-0"></div>
-                                <div class="col-sm-4 col-md-0">
-                                    @u.Email
-                                    &nbsp;
-                                    <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
-                                </div> 
-                            }
-                            else
-                            {
-                            <div class="col-sm-2 col-md-0 nav_action">
-                                <a class="nav_action-button" href="/User/Dangky"> Đăng ký</a>
-                                &nbsp;
-                                <a class="nav_action-button" href="/User/Dangnhap"> Đăng nhập</a>
-                            </div> 
-                            } 
-                          }
-                    </div>
+                <div class="col-sm-2 col-md-0" style="padding-bottom:5px;">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" style="width: 300px" type="search" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+                    </form>
                 </div>
-                <div class="container nav_buttom">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                       
-                        <ul class="nav navbar-nav" style="font-size: 1.8rem">
-                            <li>
-                                <a href="/Home/Index" title="dienthoai">
-                                    <span><i class="fas fa-home"></i></span>
-                                    <span>Trang Chủ</span>
-                                </a>
-                            </li>
-                            @Html.Action("DanhmucPartial", "Danhmuc")
-                        </ul>
-                    </div>
+                <div class="col-sm-3 col-md-0 nav_main_cart-icon">
+                    @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
                 </div>
+                @{ if (u != null)
+                    {
+                        <div class="col-sm-2 col-md-0"></div>
+                        <div class="col-sm-4 col-md-0">
+                            @u.Email
+                            &nbsp;
+                            <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-2 col-md-0 nav_action">
+                            <a class="nav_action-button" href="/User/Dangky"> Đăng ký</a>
+                            &nbsp;
+                            <a class="nav_action-button" href="/User/Dangnhap"> Đăng nhập</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="container nav_buttom">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+
+                <ul class="nav navbar-nav" style="font-size: 1.8rem">
+                    <li>
+                        <a href="/Home/Index" title="dienthoai">
+                            <span><i class="fas fa-home"></i></span>
+                            <span>Trang Chủ</span>
+                        </a>
+                    </li>
+                    @Html.Action("DanhmucPartial", "Danhmuc")
+                    <li>
+                        <a href="/Home/Contact" title="LIENHE">
+                            <span><i class="fas fa-address-card"></i></span>
+                            <span>Liên lạc</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+    </div>
+    <hr />
+    <footer class="footer" style="padding-left:120px;padding-right:120px">
+
+        <div class="row">
+            <div class="col-md-3 col-sm-6">
+                <img src="~/HinhanhSP/logoduoi12.png" class="img-responsive" alt="" /><br />
+                <span> <b>Địa chỉ: </b>454A Lê Văn Lương, Tân Phong, Quận 7, TPHCM</span>
+                <br />
+                <span><b>SĐT: </b><a href="tel:+84344387371">0344.387.371</a></span>
+                <br />
+                <b>Mail: </b> <a href="mailto:Minhho.technology@gmail.com">Minh@OnionICTShop.com</a>
+
+            </div>
+            <div class="col-md-3 col-sm-6">
+                <span style="margin-top: 160px;">Chính sách bảo dưỡng</span>
+                <br />
+                <span>Chính sách bảo hành</span>
+                <br />
+                <span>Một số luu ý khi mua hàng</span>
+                <br />
+                <span>Cộng tác viên bán hàng </span>
+                <br />
+                <span>Góp ý, khiếu nại</span>
             </div>
 
-            <div class="container body-content">
-                @RenderBody()
-                <hr />
+            <div class="col-md-3 col-sm-6">
+                <span>Giới thiệu công ty</span>
+                <br />
+                <span>Tuyển dụng</span>
+
+                <br />
+                <span>Mua trả góp</span>
+                @*  *@
+
+                <br />
+                <span>Lịch sử mua hàng</span>
+                <br />
+                <span>Giao hàng và thanh toán</span>
             </div>
-            <hr />
-            <footer class="footer" style="padding-left:50px">
-                <div class="row">
-                    <div class="col-md-3 col-sm-6">
-                        <span>454A Lê Văn Lương, Tân Phong, Quận 7, TPHCM</span>
-                        <br />
-                        <span>0344.387.371</span>
-                        <br />
-                        <span>Minhho.technology@gmail.com</span>
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <span>Chính sách bảo dưỡng</span>
-                        <br />
-                        <span>Chính sách bảo hành</span>
-                        <br />
-                        <span>Một số luu ý khi mua hàng</span>
-                        <br />
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <span>Giới thiệu công ty</span>
-                        <br />
-                        <span>Tuyển dụng</span>
-                        <br />
-                        <span>Góp ý, khiếu nại</span>
-                        <br />
-                    </div>
-                    <div class="col-md-3 col-sm-6">
-                        <span>Mua trả góp</span>
-                        <br />
-                        <span>Cộng tác viên bán hàng </span>
-                        <br />
-                        <span>Lịch sử mua hàng</span>
-                        <br />
-                        <span>Giao hàng và thanh toán</span>
-
-                    </div>
-                </div>
-                <hr />
-            </footer>
+            <div class="col-md-3 col-sm-6">
+                @*<div id="map" style="width:400px; height:400px"> </div>
+                    <script>
+                        var map;
+                        function initMap() {
+                            map = new google.maps.Map(document.getElementById('map'), {
+                                center: { lat: 10.736374789827725, lng: 106.70263388182588 },
+                                zoom: 8
+                            });
+                        }
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5tsFRo7luge8p6WQ7uDgdnoxb1F63-w&callback=initMap"></script>*@
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3919.9777141978907!2d106.7004881!3d10.7362009!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f99b4aa75c7%3A0xd3885c333a478709!2zNDU0YSBMw6ogVsSDbiBMxrDGoW5nLCBUw6JuIEjGsG5nLCBRdeG6rW4gNywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1svi!2s!4v1626922472130!5m2!1svi!2s"
+                        width="250" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+        <hr />
+    </footer>
 
 
-
-            @Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
-            @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 </html>
