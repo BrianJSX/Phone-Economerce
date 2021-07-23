@@ -1,17 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Ictshop.Models;
+using Ictshop.PaymentMoMo;
+using Newtonsoft.Json.Linq;
 
 namespace Ictshop.Controllers
 {
+
     public class GioHangController : Controller
     {
         Qlbanhang db = new Qlbanhang();
         // GET: GioHang
-        
         //Lấy giỏ hàng 
         public List<GioHang> LayGioHang()
         {
@@ -104,7 +107,7 @@ namespace Ictshop.Controllers
         {
             List<GioHang> listGioHang = Session["GioHang"] as List<GioHang>;
 
-            if (listGioHang.Count == 0)
+            if (listGioHang == null || listGioHang.Count == 0 )
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -157,12 +160,7 @@ namespace Ictshop.Controllers
             return View(lstGioHang);
 
         }
-        public ActionResult DatHangThanhCong()
-        {
-            return View();
-        }
-
-
+      
         #region Đặt hàng
         //Xây dựng chức năng đặt hàng
         [HttpPost]
@@ -207,5 +205,131 @@ namespace Ictshop.Controllers
         }
         #endregion
 
+        public ActionResult ThanhToanMomo()
+        {
+            if (Session["use"] == null || Session["use"].ToString() == "")
+            {
+                return RedirectToAction("Dangnhap", "User");
+            }
+            //Kiểm tra giỏ hàng
+            if (Session["GioHang"] == null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            List<GioHang> gh = LayGioHang();
+            string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
+            string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
+            string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
+            string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
+            string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
+            string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
+            string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
+            
+            string amount = TongTien().ToString();
+            string orderid = Guid.NewGuid().ToString();
+            string requestId = Guid.NewGuid().ToString();
+            string extraData = "";
+
+            string rawHash = "partnerCode=" +
+                partnerCode + "&accessKey=" +
+                accessKey + "&requestId=" +
+                requestId + "&amount=" +
+                amount + "&orderId=" +
+                orderid + "&orderInfo=" +
+                orderInfo + "&returnUrl=" +
+                returnUrl + "&notifyUrl=" +
+                notifyurl + "&extraData=" +
+                extraData;
+
+            MoMoSecurity Cryto = new MoMoSecurity();
+            string signature = Cryto.signSHA256(rawHash, serectKey);
+
+            JObject message = new JObject
+            {
+                { "partnerCode", partnerCode },
+                { "accessKey", accessKey },
+                { "requestId", requestId },
+                { "amount", amount },
+                { "orderId", orderid },
+                { "orderInfo", orderInfo },
+                { "returnUrl", returnUrl },
+                { "notifyUrl", notifyurl },
+                { "extraData", extraData },
+                { "requestType", "captureMoMoWallet" },
+                { "signature", signature }
+
+            };
+
+            string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
+            JObject jmessage = JObject.Parse(responseFromMomo);
+            return Redirect(jmessage.GetValue("payUrl").ToString());
+        }
+
+        public ActionResult DatHangThanhCong()
+        {
+            return View();
+        }
+
+        public ActionResult ReturnUrl()
+        {
+            string param = Request.QueryString.ToString().Substring(0, Request.QueryString.ToString().IndexOf("signature") - 1);
+            param = Server.UrlDecode(param);
+            MoMoSecurity crypto = new MoMoSecurity();
+            string serectKey = ConfigurationManager.AppSettings["serectkey"].ToString();
+            string signature = crypto.signSHA256(param, serectKey);
+            if (signature != Request["signature".ToString()])
+            {
+                ViewBag.message = "THÔNG TIN REQUEST KHÔNG HỢP LỆ ";
+            }
+            if (!Request.QueryString["errorCode"].Equals("0"))
+            {
+                ViewBag.message = "THANH TOÁN THẤT BẠI";
+            }
+            else
+            {
+                ViewBag.message = "THANH TOÁN THÀNH CÔNG";
+                Nguoidung kh = (Nguoidung)Session["use"];
+
+                var ddh = new Donhang()
+                {
+                    MaNguoidung = kh.MaNguoiDung,
+                    Ngaydat = DateTime.Now,
+                    Tinhtrang = 1
+                };
+
+                List<GioHang> gh = LayGioHang();
+                db.Donhangs.Add(ddh);
+                db.SaveChanges();
+                //Thêm chi tiết đơn hàng
+                foreach (var item in gh)
+                {
+                    Chitietdonhang ctDH = new Chitietdonhang();
+                    ctDH.Madon = ddh.Madon;
+                    ctDH.Masp = item.iMasp;
+                    ctDH.Soluong = item.iSoLuong;
+                    ctDH.Dongia = (decimal)item.dDonGia;
+                    db.Chitietdonhangs.Add(ctDH);
+                }
+                db.SaveChanges();
+                gh.Clear();
+            }
+            return View();
+        }
+
+        public ActionResult NotifyUrl()
+        {
+            return View();
+        }
+
+        public ActionResult DatHangMoMoThanhCong()
+        {
+            return View();
+        }
+
+        public ActionResult DatHangMoMoThatBai()
+        {
+            return View();
+        }
     }
 }

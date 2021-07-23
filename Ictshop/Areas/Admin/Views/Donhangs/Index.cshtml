@@ -25,27 +25,55 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Nguoidung.Hoten)
                 </th>
-                <th></th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Địa chỉ
+                </th>
+                <th>
+                    Số điện thoại
+                </th>
             </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ngaydat)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tinhtrang)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Chi tiết đơn hàng", "ChiTietDonHang", new { id = item.Madon }) |
-                        @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
-                    </td>
-                </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ngaydat)
+            </td>
+            <td>
+                @if (item.Tinhtrang == 0)
+                {
+                    <span style="color: red; font-weight: bold">Chưa thanh toán</span>
+                }
+                else if (item.Tinhtrang == 1)
+                {
+                    <span style="color: green; font-weight: bold">Đã thanh toán qua MoMo</span>
+                }
+                else
+                {
+                    <span style="color: #0a00ef; font-weight: bold">Đã thanh toán trực tiếp</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nguoidung.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nguoidung.Diachi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nguoidung.Dienthoai)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết đơn hàng", "ChiTietDonHang", new { id = item.Madon }) |
+                @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
+            </td>
+        </tr>
             }
 
         </table>

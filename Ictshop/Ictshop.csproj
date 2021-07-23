@@ -51,6 +51,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\Desktop\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
@@ -191,6 +194,8 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Qlbanhang.tt</DependentUpon>
     </Compile>
+    <Compile Include="PaymentMoMo\MoMoSecurity.cs" />
+    <Compile Include="PaymentMoMo\PaymentRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +348,10 @@
     <Content Include="Views\Sanpham\dtvsmartPartial.cshtml" />
     <Content Include="Views\GioHang\DatHangThanhCong.cshtml" />
     <Content Include="Views\Danhmuc\List.cshtml" />
+    <Content Include="Views\GioHang\DatHangMoMoThanhCong.cshtml" />
+    <Content Include="Views\GioHang\DatHangMoMoThatBai.cshtml" />
+    <Content Include="Views\GioHang\ReturnUrl.cshtml" />
+    <Content Include="Views\GioHang\NotifyUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
