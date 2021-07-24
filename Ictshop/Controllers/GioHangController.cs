@@ -14,8 +14,10 @@ namespace Ictshop.Controllers
     public class GioHangController : Controller
     {
         Qlbanhang db = new Qlbanhang();
-        // GET: GioHang
-        //Lấy giỏ hàng 
+        /**
+         * Hello Tao am Ho Minh 
+         * Chức năng giỏ hàng**/
+        #region Giỏ Hàng
         public List<GioHang> LayGioHang()
         {
             List<GioHang> lstGioHang = Session["GioHang"] as List<GioHang>;
@@ -160,7 +162,11 @@ namespace Ictshop.Controllers
             return View(lstGioHang);
 
         }
-      
+        #endregion
+
+        /**
+         * Hello Tao am Ho Minh 
+         * Chức năng đặt hàng**/
         #region Đặt hàng
         //Xây dựng chức năng đặt hàng
         [HttpPost]
@@ -183,7 +189,8 @@ namespace Ictshop.Controllers
             {
                 MaNguoidung = kh.MaNguoiDung,
                 Ngaydat = DateTime.Now,
-                Tinhtrang = 0
+                Tinhtrang = 0,
+                MaDonMoMo = "DONTRUCTIEP"
             };
 
             List<GioHang> gh = LayGioHang();
@@ -203,23 +210,78 @@ namespace Ictshop.Controllers
             gh.Clear();
             return RedirectToAction("DatHangThanhCong");
         }
+
+        public ActionResult DatHangThanhCong()
+        {
+            return View();
+        }
         #endregion
 
+        /**
+         * Hello Tao am Ho Minh 
+         * Chức năng thanh toán ví MoMo**/
+        #region Thanh Toán MoMo
         public ActionResult ThanhToanMomo()
         {
+            /**
+             * Mày thanh toán trên 50tr thì méo cho nhóe
+             * Khách hàng vip tao mới cho con trai của tao ạ :3
+             * Khi nào t hứng thì t tăng hạn mức gia dịch nhóe
+             * **/
+
             if(TongTien() <= 50000000)
             {
+                /**
+                 * Tao kiểm tra đơn hàng
+                 * và tao kiểm tra giỏ hàng ok :))
+                 * **/
                 if (Session["use"] == null || Session["use"].ToString() == "")
                 {
                     return RedirectToAction("Dangnhap", "User");
                 }
-                //Kiểm tra giỏ hàng
                 if (Session["GioHang"] == null)
                 {
                     RedirectToAction("Index", "Home");
                 }
 
+                /**
+                 * Trường hợp thêm sản phẩm trước khi người dùng quét mã.
+                 * User ơi mày sẽ không thoát được đâu con trai :)) mày đừng có mà lươn :#
+                 * Cái này tao gặp nhiều rồi :))
+                 * **/
+
                 List<GioHang> gh = LayGioHang();
+                Nguoidung kh = (Nguoidung)Session["use"];
+                var ddh = new Donhang()
+                {
+                    MaNguoidung = kh.MaNguoiDung,
+                    Ngaydat = DateTime.Now,
+                    Tinhtrang = 3,
+                    MaDonMoMo = "DATHANGMOMO"
+                };
+                db.Donhangs.Add(ddh);
+                db.SaveChanges();
+
+                /**
+                 * Dòng này tao thêm sản phẩm vào bảng 
+                 * Chi tiết đơn hàng ok :))
+                 * **/
+
+                foreach (var item in gh)
+                {
+                    Chitietdonhang ctDH = new Chitietdonhang();
+                    ctDH.Madon = ddh.Madon;
+                    ctDH.Masp = item.iMasp;
+                    ctDH.Soluong = item.iSoLuong;
+                    ctDH.Dongia = (decimal)item.dDonGia;
+                    db.Chitietdonhangs.Add(ctDH);
+                }
+                db.SaveChanges();
+
+                /**
+                 * Bắt đầu xác thực Momo
+                 * Thoát làm sao được con trai của ta :))
+                 * **/
                 string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
                 string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
                 string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
@@ -229,7 +291,7 @@ namespace Ictshop.Controllers
                 string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
 
                 string amount = TongTien().ToString();
-                string orderid = Guid.NewGuid().ToString();
+                string orderid = ddh.Madon.ToString();
                 string requestId = Guid.NewGuid().ToString();
                 string extraData = "";
 
@@ -248,20 +310,19 @@ namespace Ictshop.Controllers
                 string signature = Cryto.signSHA256(rawHash, serectKey);
 
                 JObject message = new JObject
-            {
-                { "partnerCode", partnerCode },
-                { "accessKey", accessKey },
-                { "requestId", requestId },
-                { "amount", amount },
-                { "orderId", orderid },
-                { "orderInfo", orderInfo },
-                { "returnUrl", returnUrl },
-                { "notifyUrl", notifyurl },
-                { "extraData", extraData },
-                { "requestType", "captureMoMoWallet" },
-                { "signature", signature }
-
-            };
+                {
+                    { "partnerCode", partnerCode },
+                    { "accessKey", accessKey },
+                    { "requestId", requestId },
+                    { "amount", amount},
+                    { "orderId", orderid },
+                    { "orderInfo", orderInfo },
+                    { "returnUrl", returnUrl },
+                    { "notifyUrl", notifyurl },
+                    { "extraData", extraData },
+                    { "requestType", "captureMoMoWallet" },
+                    { "signature", signature }
+                };
 
                 string responseFromMomo = PaymentRequest.sendPaymentRequest(endpoint, message.ToString());
                 JObject jmessage = JObject.Parse(responseFromMomo);
@@ -270,10 +331,11 @@ namespace Ictshop.Controllers
             return RedirectToAction("GioHang");
         }
 
-        public ActionResult DatHangThanhCong()
-        {
-            return View();
-        }
+        /**
+        * Tao viết hàm này để khi redirect về trang này
+        * thì nó sẽ làm gì còn lâu tao mới nói
+        * thằng nào đọc code này của tao thì tự lên doc MoMo mà đọc nhóe :3 
+        * **/
 
         public ActionResult ReturnUrl()
         {
@@ -282,6 +344,11 @@ namespace Ictshop.Controllers
             MoMoSecurity crypto = new MoMoSecurity();
             string serectKey = ConfigurationManager.AppSettings["serectkey"].ToString();
             string signature = crypto.signSHA256(param, serectKey);
+
+            /**
+             * Tao kiểm tra chữ kí, tao kí ... fan 2k3 :3
+             * **/
+
             if (signature != Request["signature".ToString()])
             {
                 ViewBag.message = "THÔNG TIN REQUEST KHÔNG HỢP LỆ ";
@@ -293,29 +360,24 @@ namespace Ictshop.Controllers
             else
             {
                 ViewBag.message = "THANH TOÁN THÀNH CÔNG";
-                Nguoidung kh = (Nguoidung)Session["use"];
-
-                var ddh = new Donhang()
-                {
-                    MaNguoidung = kh.MaNguoiDung,
-                    Ngaydat = DateTime.Now,
-                    Tinhtrang = 1
-                };
+                string orderId = Request.QueryString["orderId"].ToString();
+                string orderInfo = Request.QueryString["orderInfo"].ToString();
 
                 List<GioHang> gh = LayGioHang();
-                db.Donhangs.Add(ddh);
-                db.SaveChanges();
-                //Thêm chi tiết đơn hàng
-                foreach (var item in gh)
+
+                /**
+                 * Dòng này t viết ra để update đơn hàng
+                 * Nhìn vào k biết thì nghỉ mọe đi :)
+                 * **/
+
+                if (gh.Count > 0)
                 {
-                    Chitietdonhang ctDH = new Chitietdonhang();
-                    ctDH.Madon = ddh.Madon;
-                    ctDH.Masp = item.iMasp;
-                    ctDH.Soluong = item.iSoLuong;
-                    ctDH.Dongia = (decimal)item.dDonGia;
-                    db.Chitietdonhangs.Add(ctDH);
+                    var suaDonHang = db.Donhangs.Find(int.Parse(orderId));
+                    suaDonHang.MaDonMoMo = orderInfo;
+                    suaDonHang.Tinhtrang = 1;
+                    db.SaveChanges();
+                    gh.Clear();
                 }
-                db.SaveChanges();
                 gh.Clear();
             }
             return View();
@@ -323,7 +385,23 @@ namespace Ictshop.Controllers
 
         public ActionResult NotifyUrl()
         {
-            return View();
+            string param = Request.QueryString.ToString().Substring(0, Request.QueryString.ToString().IndexOf("signature") - 1);
+            param = Server.UrlDecode(param);
+            MoMoSecurity crypto = new MoMoSecurity();
+            string serectKey = ConfigurationManager.AppSettings["serectkey"].ToString();
+            string signature = crypto.signSHA256(param, serectKey);
+
+            if (signature != Request["signature".ToString()])
+            {
+                /**
+                 * Hàm cha của mày k gọi nên t méo thích viết nữa 
+                 * tao mệt rồi cảm ơn :)
+                 * **/
+            }
+            string status_code = Request["status_code"].ToString();
+
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult DatHangMoMoThanhCong()
@@ -335,5 +413,6 @@ namespace Ictshop.Controllers
         {
             return View();
         }
+        #endregion
     }
 }

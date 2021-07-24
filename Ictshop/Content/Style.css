@@ -149,6 +149,13 @@
     color: #fff;
 }
 
+.btn-move-to-cart {
+    background-color: red;
+    border: 0;
+    padding: 1rem 2rem;
+    color: #fff;
+}
+
 .btn-description {
     background-color: #c50000;
     border: 0;

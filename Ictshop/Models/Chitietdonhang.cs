@@ -32,6 +32,10 @@ public partial class Chitietdonhang
 
     public virtual Sanpham Sanpham { get; set; }
 
+    public virtual Chitietdonhang Chitietdonhang1 { get; set; }
+
+    public virtual Chitietdonhang Chitietdonhang2 { get; set; }
+
 }
 
 }

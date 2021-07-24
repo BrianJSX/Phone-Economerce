@@ -73,7 +73,6 @@ namespace Ictshop
                 {
                     rsa.PersistKeyInCsp = false;
                 }
-
             }
 
             return result;

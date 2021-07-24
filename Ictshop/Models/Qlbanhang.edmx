@@ -23,6 +23,7 @@
           <Property Name="Ngaydat" Type="datetime" />
           <Property Name="Tinhtrang" Type="int" />
           <Property Name="MaNguoidung" Type="int" />
+          <Property Name="MaDonMoMo" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="Hangsanxuat">
           <Key>
@@ -70,7 +71,7 @@
           <Property Name="Bonhotrong" Type="int" />
           <Property Name="Sanphammoi" Type="bit" />
           <Property Name="Ram" Type="int" />
-          <Property Name="Anhbia" Type="nvarchar" MaxLength="10" />
+          <Property Name="Anhbia" Type="nvarchar(max)" />
           <Property Name="Mahang" Type="int" />
           <Property Name="Mahdh" Type="int" />
           <Property Name="dophangiai" Type="nvarchar" MaxLength="20" />
@@ -93,8 +94,24 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Association Name="FK_Chitietdonhang_Chitietdonhang">
+          <End Role="Chitietdonhang" Type="Self.Chitietdonhang" Multiplicity="1" />
+          <End Role="Chitietdonhang1" Type="Self.Chitietdonhang" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Chitietdonhang">
+              <PropertyRef Name="Madon" />
+              <PropertyRef Name="Masp" />
+            </Principal>
+            <Dependent Role="Chitietdonhang1">
+              <PropertyRef Name="Madon" />
+              <PropertyRef Name="Masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Chitietdonhang_Donhang">
-          <End Role="Donhang" Type="Self.Donhang" Multiplicity="1" />
+          <End Role="Donhang" Type="Self.Donhang" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Chitietdonhang" Type="Self.Chitietdonhang" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Donhang">
@@ -174,6 +191,10 @@
           <EntitySet Name="PhanQuyen" EntityType="Self.PhanQuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sanpham" EntityType="Self.Sanpham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Chitietdonhang_Chitietdonhang" Association="Self.FK_Chitietdonhang_Chitietdonhang">
+            <End Role="Chitietdonhang" EntitySet="Chitietdonhang" />
+            <End Role="Chitietdonhang1" EntitySet="Chitietdonhang" />
+          </AssociationSet>
           <AssociationSet Name="FK_Chitietdonhang_Donhang" Association="Self.FK_Chitietdonhang_Donhang">
             <End Role="Donhang" EntitySet="Donhang" />
             <End Role="Chitietdonhang" EntitySet="Chitietdonhang" />
@@ -214,6 +235,8 @@
           <Property Name="Dongia" Precision="18" Scale="0" Type="Decimal" />
           <NavigationProperty Name="Donhang" Relationship="Self.FK_Chitietdonhang_Donhang" FromRole="Chitietdonhang" ToRole="Donhang" />
           <NavigationProperty Name="Sanpham" Relationship="Self.FK_Chitietdonhang_Sanpham" FromRole="Chitietdonhang" ToRole="Sanpham" />
+          <NavigationProperty Name="Chitietdonhang1" Relationship="QLdienthoaiModel.FK_Chitietdonhang_Chitietdonhang" FromRole="Chitietdonhang" ToRole="Chitietdonhang1" />
+          <NavigationProperty Name="Chitietdonhang2" Relationship="QLdienthoaiModel.FK_Chitietdonhang_Chitietdonhang" FromRole="Chitietdonhang1" ToRole="Chitietdonhang" />
         </EntityType>
         <EntityType Name="Donhang">
           <Key>
@@ -225,6 +248,7 @@
           <Property Name="MaNguoidung" Type="Int32" />
           <NavigationProperty Name="Chitietdonhangs" Relationship="Self.FK_Chitietdonhang_Donhang" FromRole="Donhang" ToRole="Chitietdonhang" />
           <NavigationProperty Name="Nguoidung" Relationship="Self.FK_Donhang_Khachhang" FromRole="Donhang" ToRole="Nguoidung" />
+          <Property Name="MaDonMoMo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Hangsanxuat">
           <Key>
@@ -277,7 +301,7 @@
           <Property Name="Bonhotrong" Type="Int32" />
           <Property Name="Sanphammoi" Type="Boolean" />
           <Property Name="Ram" Type="Int32" />
-          <Property Name="Anhbia" MaxLength="10" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="Anhbia" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="Mahang" Type="Int32" />
           <Property Name="Mahdh" Type="Int32" />
           <NavigationProperty Name="Chitietdonhangs" Relationship="Self.FK_Chitietdonhang_Sanpham" FromRole="Sanpham" ToRole="Chitietdonhang" />
@@ -408,7 +432,25 @@
             <End EntitySet="PhanQuyens" Role="PhanQuyen" />
             <End EntitySet="Nguoidungs" Role="Nguoidung" />
           </AssociationSet>
+          <AssociationSet Name="FK_Chitietdonhang_Chitietdonhang" Association="QLdienthoaiModel.FK_Chitietdonhang_Chitietdonhang">
+            <End Role="Chitietdonhang" EntitySet="Chitietdonhangs" />
+            <End Role="Chitietdonhang1" EntitySet="Chitietdonhangs" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_Chitietdonhang_Chitietdonhang">
+          <End Type="QLdienthoaiModel.Chitietdonhang" Role="Chitietdonhang" Multiplicity="1" />
+          <End Type="QLdienthoaiModel.Chitietdonhang" Role="Chitietdonhang1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Chitietdonhang">
+              <PropertyRef Name="Madon" />
+              <PropertyRef Name="Masp" />
+            </Principal>
+            <Dependent Role="Chitietdonhang1">
+              <PropertyRef Name="Madon" />
+              <PropertyRef Name="Masp" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -428,6 +470,7 @@
           <EntitySetMapping Name="Donhangs">
             <EntityTypeMapping TypeName="QLdienthoaiModel.Donhang">
               <MappingFragment StoreEntitySet="Donhang">
+                <ScalarProperty Name="MaDonMoMo" ColumnName="MaDonMoMo" />
                 <ScalarProperty Name="Madon" ColumnName="Madon" />
                 <ScalarProperty Name="Ngaydat" ColumnName="Ngaydat" />
                 <ScalarProperty Name="Tinhtrang" ColumnName="Tinhtrang" />

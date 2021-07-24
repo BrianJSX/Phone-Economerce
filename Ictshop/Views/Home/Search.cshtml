@@ -15,7 +15,7 @@
     @foreach (var item in Model)
     {
         <div class="col-md-3 col-sm-6">
-            <a href="@Url.Action("xemchitiet", new {@Masp=item.Masp })">
+            <a href="@Url.Action("xemchitiet", "Sanpham", new {@Masp=item.Masp })">
                 <img src=@Url.Content("~/HinhanhSP/" + item.Anhbia) class="img-responsive image-action" alt="" width="200" height="200" />
             </a>
             <center>
@@ -27,7 +27,7 @@
                 {
                     <input type="submit" value="Thêm giỏ hàng" class="btn-cart" />}
 
-                <h4> <a href="@Url.Action("xemchitiet", new {@Masp=item.Masp })">Xem chi tiết </a></h4>
+                <h4> <a href="@Url.Action("xemchitiet", "Sanpham", new {@Masp=item.Masp })">Xem chi tiết </a></h4>
 
 
             </center>

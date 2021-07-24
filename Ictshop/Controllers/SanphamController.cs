@@ -28,14 +28,28 @@ namespace Ictshop.Controllers
             return PartialView(mi);
         }
 
-        public ActionResult xemchitiet(int Masp=0)
+        public ActionResult xemchitiet(int? Masp)
         {
-            var chitiet = db.Sanphams.SingleOrDefault(n=>n.Masp==Masp);
+            List<GioHang> lstGioHang = Session["GioHang"] as List<GioHang>;
+
+            if( lstGioHang == null || lstGioHang.Count == 0)
+            {
+                var chitiets = db.Sanphams.SingleOrDefault(n => n.Masp == Masp);
+                if (chitiets == null)
+                {
+                    Response.StatusCode = 404;
+                    return null;
+                }
+                return View(chitiets);
+            }
+            GioHang sanpham = lstGioHang.Find(n => n.iMasp == Masp);
+            var chitiet = db.Sanphams.SingleOrDefault(n => n.Masp == Masp);
             if (chitiet == null)
             {
                 Response.StatusCode = 404;
                 return null;
             }
+            ViewBag.SanPhamGioHang = sanpham;
             return View(chitiet);
         }
 
