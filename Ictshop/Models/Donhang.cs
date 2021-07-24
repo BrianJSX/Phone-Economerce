@@ -35,6 +35,8 @@ public partial class Donhang
 
     public Nullable<int> MaNguoidung { get; set; }
 
+    public string MaDonMoMo { get; set; }
+
 
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

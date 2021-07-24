@@ -17,6 +17,9 @@
         <table class="table">
             <tr>
                 <th>
+                    @Html.DisplayNameFor(model => model.Madon)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.Ngaydat)
                 </th>
                 <th>
@@ -27,6 +30,9 @@
                 </th>
                 <th>
                     Email
+                </th>
+                <th>
+                    Mã đơn
                 </th>
                 <th>
                     Địa chỉ
@@ -40,6 +46,9 @@
             {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Madon)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Ngaydat)
             </td>
             <td>
@@ -51,9 +60,13 @@
                 {
                     <span style="color: green; font-weight: bold">Đã thanh toán qua MoMo</span>
                 }
-                else
+                else if (item.Tinhtrang == 3)
                 {
-                    <span style="color: #0a00ef; font-weight: bold">Đã thanh toán trực tiếp</span>
+                    <span style="color: orange; font-weight: bold">Đơn hàng chưa xử lý xong</span>
+                }
+                else if (item.Tinhtrang == 4)
+                {
+                    <span style="color: blue; font-weight: bold">Đơn hàng đã thanh toán trực tiếp</span>
                 }
             </td>
             <td>
@@ -63,13 +76,16 @@
                 @Html.DisplayFor(modelItem => item.Nguoidung.Email)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.MaDonMoMo)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nguoidung.Diachi)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nguoidung.Dienthoai)
             </td>
             <td>
-                @Html.ActionLink("Chi tiết đơn hàng", "ChiTietDonHang", new { id = item.Madon }) |
+                @Html.ActionLink("Xem chi tiết", "ChiTietDonHang", new { id = item.Madon }) |
                 @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
                 @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
             </td>

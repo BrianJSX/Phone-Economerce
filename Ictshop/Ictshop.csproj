@@ -351,7 +351,6 @@
     <Content Include="Views\GioHang\DatHangMoMoThanhCong.cshtml" />
     <Content Include="Views\GioHang\DatHangMoMoThatBai.cshtml" />
     <Content Include="Views\GioHang\ReturnUrl.cshtml" />
-    <Content Include="Views\GioHang\NotifyUrl.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>

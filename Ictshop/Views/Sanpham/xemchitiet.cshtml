@@ -3,7 +3,7 @@
 
 
 @{ ViewBag.Title = "xemchitiet";
-                Layout = "~/Views/Shared/_Layout.cshtml"; }
+   Layout = "~/Views/Shared/_Layout.cshtml"; }
 <br />
 
 <div class="product">
@@ -124,12 +124,27 @@
                 <img width="400px;" src="~/HinhanhSP/promo17-71.png" />
             </div>
             <div class="product-content-action row">
-                @using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = Model.Masp, @strURL = Request.Url.ToString() }))
-                {
-                    <input width="100%" type="submit" value="Mua hàng " class="btn-cart col-md-12" />}
+              
                 <br />
+                <div style="display: flex; align-items: center">
+                    @if (ViewBag.SanPhamGioHang != null)
+                    {
+                        <div>
+                            <a style="color: #fff; text-decoration: none; background-color: red" class="btn-cart" href="/GioHang/GioHang">Thanh Toán Ngay</a>
+                        </div>
+                    }
+                    else
+                    {
+                        using (Html.BeginForm("ThemGioHang", "GioHang", new { @iMasp = Model.Masp, @strURL = Request.Url.ToString() }))
+                        {
+                            <input width="100%" type="submit" value="Thêm vào giỏ hàng" class="btn-cart col-md-12" />
+                        }
+                    }
+                    <div>
+                        <b style="font-size: 15px;margin-left: 10px; ">*Còn @Model.Soluong sản phẩm </b>
+                    </div>
+                </div>
 
-                <b style="font-size: 15px;margin-left: 10px; ">*Còn @Model.Soluong sản phẩm </b>
             </div>
             @*<div class="row">
             <div style="display: flex; justify-content: center">

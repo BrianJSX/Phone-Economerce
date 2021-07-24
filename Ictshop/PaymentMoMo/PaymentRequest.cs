@@ -30,7 +30,7 @@ namespace Ictshop.PaymentMoMo
 
                 httpWReq.ContentLength = data.Length;
                 httpWReq.ReadWriteTimeout = 30000;
-                httpWReq.Timeout = 15000;
+                httpWReq.Timeout = 250000;
                 Stream stream = httpWReq.GetRequestStream();
                 stream.Write(data, 0, data.Length);
                 stream.Close();

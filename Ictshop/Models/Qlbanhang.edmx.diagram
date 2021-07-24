@@ -19,6 +19,7 @@
         <AssociationConnector ManuallyRouted="false" Association="QLdienthoaiModel.FK_Sanpham_Hangsanxuat" />
         <AssociationConnector ManuallyRouted="false" Association="QLdienthoaiModel.FK_Sanpham_Hedieuhanh" />
         <AssociationConnector ManuallyRouted="false" Association="QLdienthoaiModel.FK_Nguoidung_Nguoidung" />
+        <AssociationConnector Association="QLdienthoaiModel.FK_Chitietdonhang_Chitietdonhang" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
