@@ -250,6 +250,19 @@ namespace Ictshop.Controllers
                  * Cái này tao gặp nhiều rồi :))
                  * **/
 
+                string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
+                string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
+                string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
+                string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");                
+                string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
+                string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
+                string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
+
+                /**
+                 * Lấy giò hàng
+                 * Thêm đơn hàng vào CSDL
+                 * **/
+
                 List<GioHang> gh = LayGioHang();
                 Nguoidung kh = (Nguoidung)Session["use"];
                 var ddh = new Donhang()
@@ -257,7 +270,7 @@ namespace Ictshop.Controllers
                     MaNguoidung = kh.MaNguoiDung,
                     Ngaydat = DateTime.Now,
                     Tinhtrang = 3,
-                    MaDonMoMo = "DATHANGMOMO"
+                    MaDonMoMo = orderInfo
                 };
                 db.Donhangs.Add(ddh);
                 db.SaveChanges();
@@ -282,13 +295,6 @@ namespace Ictshop.Controllers
                  * Bắt đầu xác thực Momo
                  * Thoát làm sao được con trai của ta :))
                  * **/
-                string endpoint = ConfigurationManager.AppSettings["endpoint"].ToString();
-                string accessKey = ConfigurationManager.AppSettings["accessKey"].ToString();
-                string serectKey = ConfigurationManager.AppSettings["serectKey"].ToString();
-                string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
-                string returnUrl = ConfigurationManager.AppSettings["returnUrl"].ToString();
-                string notifyurl = ConfigurationManager.AppSettings["notifyUrl"].ToString();
-                string partnerCode = ConfigurationManager.AppSettings["partnerCode"].ToString();
 
                 string amount = TongTien().ToString();
                 string orderid = ddh.Madon.ToString();
