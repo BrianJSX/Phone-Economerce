@@ -6,7 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using Ictshop.Models;
 using Ictshop.PaymentMoMo;
+using Ictshop.PaymentNganLuong;
 using Newtonsoft.Json.Linq;
+using static Ictshop.PaymentNganLuong.APICheckoutV3;
 
 namespace Ictshop.Controllers
 {
@@ -417,6 +419,130 @@ namespace Ictshop.Controllers
 
         public ActionResult DatHangMoMoThatBai()
         {
+            return View();
+        }
+        #endregion
+
+        #region Thanh toán Ngân lượng
+
+        public ActionResult ThanhToanNganLuong()
+        {
+            /**
+             * Lấy ra các giá trị từ biến môi trường
+             * orderInfo: Thông tin của đơn hàng
+             * returnURL : redirect URL này khi thanh toán thành công
+             * cancelUrl : redirect URL này khi thanh toán thất bại
+             */
+            if (Session["use"] == null || Session["use"].ToString() == "")
+            {
+                return RedirectToAction("Dangnhap", "User");
+            }
+            if (Session["GioHang"] == null)
+            {
+                RedirectToAction("Index", "Home");
+            }
+
+            string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
+            string returnUrl = ConfigurationManager.AppSettings["returnUrlNL"].ToString();
+            string cancelUrl = ConfigurationManager.AppSettings["cancelUrlNL"].ToString();
+            /**
+             * Lấy ra danh sách sản phẩm trong đơn hàng
+             * Lưu đơn hàng vào CSDL*
+             */
+
+            List<GioHang> gh = LayGioHang();
+            Nguoidung kh = (Nguoidung)Session["use"];
+            var ddh = new Donhang()
+            {
+                MaNguoidung = kh.MaNguoiDung,
+                Ngaydat = DateTime.Now,
+                Tinhtrang = 3,
+                MaDonMoMo = orderInfo
+            };
+            db.Donhangs.Add(ddh);
+            db.SaveChanges();
+
+            foreach (var item in gh)
+            {
+                Chitietdonhang ctDH = new Chitietdonhang();
+                ctDH.Madon = ddh.Madon;
+                ctDH.Masp = item.iMasp;
+                ctDH.Soluong = item.iSoLuong;
+                ctDH.Dongia = (decimal)item.dDonGia;
+                db.Chitietdonhangs.Add(ctDH);
+            }
+            db.SaveChanges();
+
+            /**
+             * Khởi tạo các object trước khi gọi API Ngân Lượng
+             * **/
+
+            var payment_method = "NL";
+            RequestInfo info = new RequestInfo();
+            info.Merchant_id = "36680";
+            info.Merchant_password = "matkhauketnoi";
+            info.Receiver_email = "demo@nganluong.vn";
+            info.cur_code = "vnd";
+
+            info.Order_code = orderInfo;
+            info.Total_amount = TongTien().ToString();
+            info.fee_shipping = "0";
+            info.Discount_amount = "0";
+            info.order_description = "Đơn Hàng Thanh Toán Thử";
+            info.return_url = returnUrl + "?orderId=" + ddh.Madon;
+            info.cancel_url = cancelUrl + "?orderId=" + ddh.Madon;
+            APICheckoutV3 objNLChecout = new APICheckoutV3();
+            ResponseInfo result = objNLChecout.GetUrlCheckout(info, payment_method);
+
+            if (result.Error_code == "00")
+            {
+                return Redirect(result.Checkout_url);
+            }
+            return View();
+        }
+
+        public ActionResult DatHangThanhCongNL()
+        {
+            /**
+             * Đặt hàng thành công thì
+             * Cập nhật lại trang thái đơn hàng
+             * **/
+
+            List<GioHang> gh = LayGioHang();
+            string orderId = Request.QueryString["orderId"].ToString();
+
+            if (gh.Count > 0)
+            {
+                var suaDonHang = db.Donhangs.Find(int.Parse(orderId));
+                suaDonHang.Tinhtrang = 2;
+                db.SaveChanges();
+                gh.Clear();
+            }
+
+            gh.Clear();
+            return View();
+        }
+
+        public ActionResult DatHangThatBaiNL()
+        {
+            /**
+             * Này t test đơn thành công thôi chứ méo có tiền
+             * đâu con tai của ta  :# *
+             */
+
+            List<GioHang> gh = LayGioHang();
+            string orderId = Request.QueryString["orderId"].ToString();
+
+            if (gh.Count > 0)
+            {
+                var suaDonHang = db.Donhangs.Find(int.Parse(orderId));
+                suaDonHang.Tinhtrang = 2;
+                db.SaveChanges();
+                gh.Clear();
+            }
+
+            gh.Clear();
+
             return View();
         }
         #endregion

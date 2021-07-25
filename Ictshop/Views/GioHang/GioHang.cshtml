@@ -63,8 +63,11 @@
                     <span>@String.Format("{0:0,0}", @ViewBag.TongTien)</span>
                 </li>
             </ul>
+            <div style="display: flex; justify-content: center">
+                @Html.ActionLink("Thanh toán qua Ngân Lượng", "ThanhToanNganLuong")
+            </div>
             <div style="display: flex; justify-content: center;padding: 20px">
-                    @Html.ActionLink("Thanh toán qua MoMo (Áp dụng cho đơn dưới 50tr)", "ThanhToanMoMo")
+                @Html.ActionLink("Thanh toán qua MoMo ( Đơn dưới 50tr )", "ThanhToanMoMo")
             </div>
             <div style="display: flex; justify-content: center">
                 @using (Html.BeginForm("DatHang", "GioHang", new { @class = "" }))

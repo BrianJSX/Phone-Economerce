@@ -196,6 +196,7 @@
     </Compile>
     <Compile Include="PaymentMoMo\MoMoSecurity.cs" />
     <Compile Include="PaymentMoMo\PaymentRequest.cs" />
+    <Compile Include="PaymentNganLuong\APICheckoutV3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +353,8 @@
     <Content Include="Views\GioHang\DatHangMoMoThatBai.cshtml" />
     <Content Include="Views\GioHang\ReturnUrl.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\GioHang\DatHangThanhCongNL.cshtml" />
+    <Content Include="Views\GioHang\DatHangThatBaiNL.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
