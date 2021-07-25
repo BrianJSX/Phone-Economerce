@@ -64,7 +64,10 @@
                 </li>
             </ul>
             <div style="display: flex; justify-content: center;padding: 20px">
-                    @Html.ActionLink("Thanh toán qua MoMo (Áp dụng cho đơn dưới 50tr)", "ThanhToanMoMo")
+                @Html.ActionLink("Thanh toán Paypal", "ThanhToanPaypal")
+            </div>
+            <div style="display: flex; justify-content: center;padding: 20px">
+                @Html.ActionLink("Thanh toán MoMo (Áp dụng đơn dưới 50tr)", "ThanhToanMoMo")
             </div>
             <div style="display: flex; justify-content: center">
                 @using (Html.BeginForm("DatHang", "GioHang", new { @class = "" }))

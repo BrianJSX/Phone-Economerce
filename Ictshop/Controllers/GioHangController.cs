@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Ictshop.Models;
 using Ictshop.PaymentMoMo;
 using Newtonsoft.Json.Linq;
+using PayPal.Api;
 
 namespace Ictshop.Controllers
 {
@@ -420,5 +421,125 @@ namespace Ictshop.Controllers
             return View();
         }
         #endregion
+
+        #region Thanh Toán Paypal
+        public Payment payment;
+
+        public Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        {
+            var listItems = new ItemList() { items = new List<Item>() };
+
+            List<GioHang> gh = LayGioHang();
+            foreach(var cart in gh)
+            {
+                listItems.items.Add(new Item()
+                {
+                    name = cart.sTensp,
+                    currency = "USD",
+                    price = cart.dDonGia.ToString(),
+                    quantity = cart.iSoLuong.ToString(),
+                    sku = "sku",
+                }); 
+            }
+
+            var payer = new Payer() { payment_method = "paypal" };
+
+            var redirUrl = new RedirectUrls()
+            {
+                cancel_url = redirectUrl,
+                return_url = redirectUrl
+            };
+
+            var details = new Details()
+            {
+                tax = "0",
+                shipping = "0",
+                subtotal = TongTien().ToString()
+            };
+
+            var amount = new Amount()
+            {
+                currency = "USD",
+                total = (Convert.ToDouble(details.tax) + Convert.ToDouble(details.subtotal)).ToString(),
+                details = details
+            };
+
+            var transactionList = new List<Transaction>();
+
+            transactionList.Add(new Transaction()
+            {
+                description = "Ho Minh test transaction",
+                invoice_number = Convert.ToString((new Random()).Next(100000)),
+                amount = amount,
+                item_list = listItems,
+            });
+
+            payment = new Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = transactionList,
+                redirect_urls = redirUrl
+            };
+            return payment.Create(apiContext);
+
+        }
+
+        private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
+        {
+            var paymentExcution = new PaymentExecution()
+            {
+                payer_id = payerId
+            };
+            payment = new Payment()
+            {
+                id = paymentId
+            };
+            return payment.Execute(apiContext, paymentExcution);
+        }
+
+        public ActionResult ThanhToanPaypal()
+        {
+            APIContext apicontext = PaypalConfiguration.GetAPIContext();
+            try
+            {
+                string payerId = Request.Params["PayerID"];
+                if(string.IsNullOrEmpty(payerId))
+                {
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/GioHang/ThanhToanPaypal";
+                    var guid = Convert.ToString((new Random()).Next(100000));
+                    var createdPayment = CreatePayment(apicontext, baseURI + "guid=" + guid);
+
+                    var links = createdPayment.links.GetEnumerator();
+                    string paypalRedirectUrl = null;
+
+                    while (links.MoveNext())
+                    {
+                        Links link = links.Current;
+                        if (link.rel.ToLower().Trim().Equals("approval_url"))
+                        {
+                            //saving the payapalredirect URL to which user will be redirected for payment  
+                            paypalRedirectUrl = link.href;
+                        }
+                        Session.Add(guid, createdPayment.id);
+                        return Redirect(paypalRedirectUrl);
+                    }
+                } else
+                {
+                    var guid = Request.Params["guid"];
+                    var executePayment = ExecutePayment(apicontext, payerId, Session[guid] as string);
+                    if(executePayment.state.ToLower() != "approved")
+                    {
+                        return View("ThanhToanPaypalFail");
+                    };
+                }
+            } catch(Exception ex)
+            {
+                throw;
+            }
+            return View("ThanhToanPaypalSuccess");
+        }
+        #endregion
+
     }
 }
