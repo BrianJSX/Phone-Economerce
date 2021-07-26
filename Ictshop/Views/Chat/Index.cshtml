@@ -7,10 +7,10 @@
 <div class="chat">
     <div class="chat__header">
         <div>
-            <button id="name-click"><i class="fas fa-plus"></i> Tên</button>
+            <button id="name-click"><i class="fas fa-plus"></i></button>
         </div>
         <div>
-            Phòng Khách
+            Phòng Chat Tổng
         </div>
         <div>
             <button id="chat-hidden-show"><i class="fas fa-angle-down"></i></button>
@@ -21,7 +21,7 @@
         </ul>
     </div>
     <div class="chat__action">
-        <input type="text" id="message" />
+        <input type="text" placeholder="Nhập tin nhắn cần chat...." id="message" />
         <button type="button" id="sendmessage" ><i class="fas fa-paper-plane"></i></button>
         <input type="hidden" id="displayname" />
     </div>
@@ -33,7 +33,7 @@
         position: fixed;
         right: 5rem;
         bottom: 5rem;
-        background-color: #fff;
+        background-color: #F5D104;
         padding: 2rem;
         font-size: 3rem;
         line-height: 0;
@@ -44,29 +44,29 @@
         display: none;
         z-index: 1000;
         position: fixed;
-        bottom: 0;
+        bottom: 1rem;
         right: 2rem;
         width: 40rem;
         height: 40rem;
-        background-color: #fff;
+        background-color: #F5D104;
         padding: 20px;
         border-radius: 1rem;
     }
-    .#name-click { 
+    .#name-click {
         line-height: 0;
     }
     .chat__header {
         display: flex;
         border-bottom: 2px solid gray;
-        padding-bottom: 5px;
+        padding-bottom: 10px;
         justify-content: space-between;
         align-items: center;
     }
-    .chat__content { 
+    .chat__content {
         overflow-y: auto;
         margin-bottom: 10px;
     }
-    .chat__action { 
+    .chat__action {
         position: absolute;
         bottom: 1.5rem;
         left: 0;
@@ -79,14 +79,16 @@
         border: 1px solid gray;
         padding: 5px;
         border-radius: 2rem;
+        background-color: #d4d3d3;
     }
     .chat__action #message {
         width: 25rem;
         height: 3rem;
         border: 0;
         outline: 0;
+        background-color: transparent;
     }
-    .chat__action #sendmessage { 
+    .chat__action #sendmessage {
         border: 0;
         outline: 0;
         color: blue;

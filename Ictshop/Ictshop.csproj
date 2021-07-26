@@ -166,6 +166,7 @@
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\DanhmucController.cs" />
+    <Compile Include="Controllers\DonHangsController.cs" />
     <Compile Include="Controllers\GioHangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SanphamController.cs" />
@@ -379,6 +380,7 @@
     <Content Include="Views\GioHang\DatHangThanhCongNL.cshtml" />
     <Content Include="Views\GioHang\DatHangThatBaiNL.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
+    <Content Include="Views\DonHangs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
