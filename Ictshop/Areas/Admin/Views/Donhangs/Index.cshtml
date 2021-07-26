@@ -1,9 +1,13 @@
-﻿@model IEnumerable<Ictshop.Models.Donhang>
+﻿@model PagedList.IPagedList<Ictshop.Models.Donhang>
+
+@using PagedList.Mvc;
+
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+
 <div class="admin-content-main">
     <div class="admin-content-main-header">
         <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
@@ -17,16 +21,16 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Madon)
+                    Mã đơn
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Ngaydat)
+                    Ngày đặt
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Tinhtrang)
+                    Tình trạng
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Nguoidung.Hoten)
+                    Họ tên
                 </th>
                 <th>
                     Email
@@ -44,60 +48,65 @@
 
             @foreach (var item in Model)
             {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Madon)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ngaydat)
-            </td>
-            <td>
-                @if (item.Tinhtrang == 0)
-                {
-                    <span style="color: red; font-weight: bold">Chưa thanh toán</span>
-                }
-                else if (item.Tinhtrang == 1)
-                {
-                    <span style="color: green; font-weight: bold">Đã thanh toán qua MoMo</span>
-                }
-                else if (item.Tinhtrang == 2)
-                {
-                    <span style="color: green; font-weight: bold">Đã thanh toán qua Ngân Lượng</span>
-                }
-                else if (item.Tinhtrang == 3)
-                {
-                    <span style="color: orange; font-weight: bold">Đơn hàng chưa xử lý xong</span>
-                }
-                else if (item.Tinhtrang == 4)
-                {
-                    <span style="color: blue; font-weight: bold">Đơn hàng đã thanh toán trực tiếp</span>
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nguoidung.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaDonMoMo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nguoidung.Diachi)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nguoidung.Dienthoai)
-            </td>
-            <td>
-                @Html.ActionLink("Xem chi tiết", "ChiTietDonHang", new { id = item.Madon }) |
-                @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
-                @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
-            </td>
-        </tr>
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Madon)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ngaydat)
+                    </td>
+                    <td>
+                        @if (item.Tinhtrang == 0)
+                        {
+                            <span style="color: red; font-weight: bold">Chưa thanh toán</span>
+                        }
+                        else if (item.Tinhtrang == 1)
+                        {
+                            <span style="color: green; font-weight: bold">Đã thanh toán qua MoMo</span>
+                        }
+                        else if (item.Tinhtrang == 2)
+                        {
+                            <span style="color: green; font-weight: bold">Đã thanh toán qua Ngân Lượng</span>
+                        }
+                        else if (item.Tinhtrang == 3)
+                        {
+                            <span style="color: orange; font-weight: bold">Đơn hàng chưa xử lý xong</span>
+                        }
+                        else if (item.Tinhtrang == 4)
+                        {
+                            <span style="color: blue; font-weight: bold">Đơn hàng đã thanh toán trực tiếp</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nguoidung.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaDonMoMo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nguoidung.Diachi)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nguoidung.Dienthoai)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Xem chi tiết", "ChiTietDonHang", new { id = item.Madon }) |
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.Madon }) |
+                        @Html.ActionLink("Xóa", "Delete", new { id = item.Madon })
+                    </td>
+                </tr>
             }
 
         </table>
     </div>
+</div>
+<div class="admin-content-main-paginate">
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 
 

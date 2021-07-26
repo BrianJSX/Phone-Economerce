@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Ictshop.Models;
+using PagedList;
 
 namespace Ictshop.Areas.Admin.Controllers
 {
@@ -16,15 +17,18 @@ namespace Ictshop.Areas.Admin.Controllers
         private SessionController session = new SessionController();
 
         // GET: Admin/Donhangs
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var u = Session["use"] as Ictshop.Models.Nguoidung;
             if (session.checkRoleAdmin(u))
             {
                 return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
             }
+            if (page == null) page = 1;
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
             var donhangs = db.Donhangs.Include(d => d.Nguoidung).OrderByDescending(n => n.Madon);
-            return View(donhangs.ToList());
+            return View(donhangs.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult ChiTietDonHang(int id)
