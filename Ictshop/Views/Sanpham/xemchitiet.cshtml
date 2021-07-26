@@ -3,7 +3,7 @@
 
 
 @{ ViewBag.Title = "xemchitiet";
-   Layout = "~/Views/Shared/_Layout.cshtml"; }
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
 <br />
 
 <div class="product">
@@ -22,9 +22,9 @@
             <div class="product-content-img">
 
                 @*<img src="~/HinhanhSP/frame17-7.png" width="430px"style="margin-top:-30px;" alt="" />*@
-                <img src="@Url.Content("~/HinhanhSP/" +@Model.Anhbia)"  width="300px" />
+                <img id="product_image" src="@Url.Content("~/HinhanhSP/" +@Model.Anhbia)" width="300px" />
             </div>
-            
+
             <div class="product-header-maintenance row">
                 <div class="col-md-6">
                     <i class="fas fa-handshake-slash"></i>
@@ -89,8 +89,6 @@
                         <td>Ngày ra mắt </td>
                         <td>@Model.ngayramat </td>
                     </tr>
-
-
                 </table>
                 <hr />
 
@@ -124,7 +122,7 @@
                 <img width="400px;" src="~/HinhanhSP/promo17-71.png" />
             </div>
             <div class="product-content-action row">
-              
+
                 <br />
                 <div style="display: flex; align-items: center">
                     @if (ViewBag.SanPhamGioHang != null)
@@ -147,13 +145,13 @@
 
             </div>
             @*<div class="row">
-            <div style="display: flex; justify-content: center">
-                <button class="btn-description description-button-click" type="button"> Mô tả sản phẩm</button>
-            </div>
-            <div class="description" style="padding: 20px; margin: 20px;">
-                @Model.Mota
-            </div>
-        </div>*@
+                    <div style="display: flex; justify-content: center">
+                        <button class="btn-description description-button-click" type="button"> Mô tả sản phẩm</button>
+                    </div>
+                    <div class="description" style="padding: 20px; margin: 20px;">
+                        @Model.Mota
+                    </div>
+                </div>*@
             <div>
                 <b>Nhận ngay ưu đãi đặc biệt</b>
                 <br />
@@ -178,40 +176,41 @@
                 </tr>
 
             </table>
-           
-            </div>
-                <style>
-                    .chen {
-                        color: #fff;
-                        position: absolute;
-                        top: 10px
-                    }
-
-                    table {
-                        font-family: arial, sans-serif;
-                        border-collapse: collapse;
-                        width: 100%;
-                    }
-
-                    td, th {
-                        border: 15px solid #a6a6a6;
-                        text-align: center;
-                        padding: 20px;
-                    }
-                </style>
-            </div>
 
         </div>
+        <style>
+            .chen {
+                color: #fff;
+                position: absolute;
+                top: 10px
+            }
+
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            td, th {
+                border: 15px solid #a6a6a6;
+                text-align: center;
+                padding: 20px;
+            }
+        </style>
+    </div>
+
+</div>
 </div>
 @section Scripts
 {
-   <script>
-       $(document).ready(function () {
-           $(".description-button-click").click(function () {
-               console.log("ok")
-               $(".description").toggle();
-           });
-       });
+    <script>
+        $(document).ready(function () {
+            $("#product_image").ezPlus();
+            $(".description-button-click").click(function () {
+                console.log("ok")
+                $(".description").toggle();
+            });
+        });
     </script>
 }
 

@@ -149,6 +149,7 @@
     <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
     <script src="~/signalr/hubs"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script type="text/javascript">
         $(function () {
             var chat = $.connection.chatHub;
@@ -162,7 +163,7 @@
             };
             let displayname = $('#displayname').val();
             if (displayname == "") {
-                 $('#displayname').val("Người lạ " + 1 + Math.floor(Math.random() * 6) );
+                $('#displayname').val("Người lạ " + 1 + Math.floor(Math.random() * 6));
             }
 
             $('#name-click').click(function () {
@@ -178,7 +179,7 @@
                 $('.chat').hide();
                 $('.chat__hidden').show();
             });
-            
+
 
             $('#message').focus();
             $.connection.hub.start().done(function () {
