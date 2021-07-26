@@ -93,11 +93,11 @@
 
     <div class="container body-content">
         @RenderBody()
+        @Html.Action("Index", "Chat", new { @class = "giohang" })
         <hr />
     </div>
     <hr />
     <footer class="footer" style="padding-left:120px;padding-right:120px">
-
         <div class="row">
             <div class="col-md-3 col-sm-6">
                 <img src="~/HinhanhSP/logoduoi12.png" class="img-responsive" alt="" /><br />
@@ -135,17 +135,6 @@
                 <span>Giao hàng và thanh toán</span>
             </div>
             <div class="col-md-3 col-sm-6">
-                @*<div id="map" style="width:400px; height:400px"> </div>
-                    <script>
-                        var map;
-                        function initMap() {
-                            map = new google.maps.Map(document.getElementById('map'), {
-                                center: { lat: 10.736374789827725, lng: 106.70263388182588 },
-                                zoom: 8
-                            });
-                        }
-                    </script>
-                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDL5tsFRo7luge8p6WQ7uDgdnoxb1F63-w&callback=initMap"></script>*@
                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3919.9777141978907!2d106.7004881!3d10.7362009!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f99b4aa75c7%3A0xd3885c333a478709!2zNDU0YSBMw6ogVsSDbiBMxrDGoW5nLCBUw6JuIEjGsG5nLCBRdeG6rW4gNywgVGjDoG5oIHBo4buRIEjhu5MgQ2jDrSBNaW5o!5e0!3m2!1svi!2s!4v1626922472130!5m2!1svi!2s"
                         width="250" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
             </div>
@@ -153,9 +142,56 @@
         <hr />
     </footer>
 
-
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.2.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.2.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script type="text/javascript">
+        $(function () {
+            var chat = $.connection.chatHub;
+            chat.client.broadcastMessage = function (name, message) {
+                // Html encode display name and message.
+                var encodedName = $('<div />').text(name).html();
+                var encodedMsg = $('<div />').text(message).html();
+                // Add the message to the page.
+                $('#discussion').append('<li><strong>' + encodedName
+                    + '</strong>:&nbsp;&nbsp;' + encodedMsg + '</li>');
+            };
+            let displayname = $('#displayname').val();
+            if (displayname == "") {
+                 $('#displayname').val("Người lạ " + 1 + Math.floor(Math.random() * 6) );
+            }
+
+            $('#name-click').click(function () {
+                $('#displayname').val(prompt('Enter your name:', ''));
+            });
+
+            $('#chat-hidden').click(function () {
+                $('.chat').show();
+                $('.chat__hidden').hide();
+            });
+
+            $('#chat-hidden-show').click(function () {
+                $('.chat').hide();
+                $('.chat__hidden').show();
+            });
+            
+
+            $('#message').focus();
+            $.connection.hub.start().done(function () {
+                $('#sendmessage').click(function () {
+                    chat.server.send($('#displayname').val(), $('#message').val());
+                    $("#discussion").animate({
+                        scrollTop: $('#discussion').get(0).scrollHeight
+                    }, 300);
+                    $('#message').val('').focus();
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>

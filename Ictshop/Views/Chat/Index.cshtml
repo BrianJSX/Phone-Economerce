@@ -1,0 +1,105 @@
+﻿<div id="chat-hidden" class="chat__hidden">
+    <div class="chat__hidden__header">
+        <i class="fas fa-envelope-open-text">
+        </i>
+    </div>
+</div>
+<div class="chat">
+    <div class="chat__header">
+        <div>
+            <button id="name-click"><i class="fas fa-plus"></i> Tên</button>
+        </div>
+        <div>
+            Phòng Khách
+        </div>
+        <div>
+            <button id="chat-hidden-show"><i class="fas fa-angle-down"></i></button>
+        </div>
+    </div>
+    <div class="chat__content">
+        <ul id="discussion">
+        </ul>
+    </div>
+    <div class="chat__action">
+        <input type="text" id="message" />
+        <button type="button" id="sendmessage" ><i class="fas fa-paper-plane"></i></button>
+        <input type="hidden" id="displayname" />
+    </div>
+</div>
+
+<style type="text/css">
+    .chat__hidden {
+        z-index: 1000;
+        position: fixed;
+        right: 5rem;
+        bottom: 5rem;
+        background-color: #fff;
+        padding: 2rem;
+        font-size: 3rem;
+        line-height: 0;
+        border-radius: 50%;
+        border: 1px solid gray;
+    }
+    .chat {
+        display: none;
+        z-index: 1000;
+        position: fixed;
+        bottom: 0;
+        right: 2rem;
+        width: 40rem;
+        height: 40rem;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 1rem;
+    }
+    .#name-click { 
+        line-height: 0;
+    }
+    .chat__header {
+        display: flex;
+        border-bottom: 2px solid gray;
+        padding-bottom: 5px;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .chat__content { 
+        overflow-y: auto;
+        margin-bottom: 10px;
+    }
+    .chat__action { 
+        position: absolute;
+        bottom: 1.5rem;
+        left: 0;
+        right: 0;
+    }
+    .chat__action {
+        display: flex;
+        position: relative;
+        justify-content: space-between;
+        border: 1px solid gray;
+        padding: 5px;
+        border-radius: 2rem;
+    }
+    .chat__action #message {
+        width: 25rem;
+        height: 3rem;
+        border: 0;
+        outline: 0;
+    }
+    .chat__action #sendmessage { 
+        border: 0;
+        outline: 0;
+        color: blue;
+        background-color: transparent;
+        padding:0  20px;
+    }
+    #discussion {
+        margin-top: 5px;
+        list-style-type: none;
+        width: 35rem;
+        height: 28rem;
+        overflow-y: auto;
+        word-break: break-all;
+    }
+
+</style>
