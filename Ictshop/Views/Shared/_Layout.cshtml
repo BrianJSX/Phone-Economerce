@@ -40,16 +40,30 @@
                         <input class="btn btn-default" value="Tìm kiếm" type="submit">
                     </form>
                 </div>
-                <div class="col-sm-4 col-md-0 nav_main_cart-icon">
+                <div class="col-sm-3 col-md-0 nav_main_cart-icon">
                     @Html.Action("GioHangPartial", "GioHang", new { @class = "giohang" })
                 </div>
                 @{ if (u != null)
                     {
-                        <div class="col-sm-4 col-md-0">
-                            @u.Email
-                            &nbsp;
-                            <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
-                        </div>
+                                <div class="col-sm-5 col-md-0">
+                                    <div class="col-md-5">
+                                        <a style="color:white" class="nav_action-button" href="/DonHangs/Index"> Đơn hàng của bạn</a>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @u.Hoten
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-1 dropdown">
+                                        <span style="font-size: 2rem; line-height: 0;"><i class="fas fa-arrow-alt-circle-down"></i></span>
+                                        <div class="dropdown-content">
+                                            @if (u.IDQuyen == 2)
+                                            {
+                                                <a style="color:white" class="nav_action-button" href="/Admin/Home"> Trang Quản Lý</a>
+                                            }
+                                            <a style="color:white" class="nav_action-button" href="/User/DangXuat"> Đăng Xuất</a>
+                                        </div>
+                                    </div>
+                                </div>
                     }
                     else
                     {
@@ -152,6 +166,11 @@
     <script type="text/javascript" src="https://cdn.rawgit.com/igorlino/elevatezoom-plus/1.1.6/src/jquery.ez-plus.js"></script>
     <script type="text/javascript">
         $(function () {
+            window.setInterval(function () {
+                $("#discussion").animate({
+                    scrollTop: $('#discussion').get(0).scrollHeight
+                }, 300);
+            }, 2000);
             var chat = $.connection.chatHub;
             chat.client.broadcastMessage = function (name, message) {
                 // Html encode display name and message.
@@ -167,7 +186,10 @@
             }
 
             $('#name-click').click(function () {
-                $('#displayname').val(prompt('Enter your name:', ''));
+                $('#displayname').val(prompt('Vui lòng nhập tên của bạn:', ''));
+                if (displayname == "") {
+                    $('#displayname').val("Người lạ " + 1 + Math.floor(Math.random() * 6));
+                }
             });
 
             $('#chat-hidden').click(function () {
@@ -189,6 +211,15 @@
                         scrollTop: $('#discussion').get(0).scrollHeight
                     }, 300);
                     $('#message').val('').focus();
+                });
+                $('#message').keypress(function (e) {
+                    if (e.which == 13) {
+                        chat.server.send($('#displayname').val(), $('#message').val());
+                        $("#discussion").animate({
+                            scrollTop: $('#discussion').get(0).scrollHeight
+                        }, 300);
+                        $('#message').val('').focus();
+                    }
                 });
             });
         });

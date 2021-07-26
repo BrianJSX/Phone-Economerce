@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<Ictshop.Models.Donhang>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="cart">
+    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem">
+        Đơn Hàng Của Bạn
+    </div>
+</div>
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            Ngày Đặt
+        </th>
+        <th>
+            Tình Trạng
+        </th>
+        <th>
+            Mã Dơn
+        </th>
+        <th>
+            Họ tên
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ngaydat)
+            </td>
+            <td>
+                @if (item.Tinhtrang == 0)
+                {
+                    <span style="color: red; font-weight: bold">Chưa thanh toán</span>
+                }
+                else if (item.Tinhtrang == 1)
+                {
+                    <span style="color: green; font-weight: bold">Đã thanh toán qua MoMo</span>
+                }
+                else if (item.Tinhtrang == 2)
+                {
+                    <span style="color: green; font-weight: bold">Đã thanh toán qua Ngân Lượng</span>
+                }
+                else if (item.Tinhtrang == 3)
+                {
+                    <span style="color: orange; font-weight: bold">Đơn hàng chưa xử lý xong</span>
+                }
+                else if (item.Tinhtrang == 4)
+                {
+                    <span style="color: blue; font-weight: bold">Đơn hàng đã thanh toán trực tiếp</span>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaDonMoMo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="admin-content-main-paginate">
+    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>

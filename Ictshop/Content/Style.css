@@ -25,6 +25,25 @@
     background-color: #F5D103;
     color: #000;
 }
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #c50000 ;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+    left: -8rem;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 
 .category { 
     padding: 20px;
