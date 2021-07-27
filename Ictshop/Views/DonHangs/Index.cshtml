@@ -64,6 +64,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Nguoidung.Hoten)
             </td>
+            <td>@Html.ActionLink("Xem chi tiết", "ChiTietDonHang", new { id = item.Madon})</td>
         </tr>
     }
 

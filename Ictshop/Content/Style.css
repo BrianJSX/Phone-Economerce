@@ -290,3 +290,8 @@ login-main-form {
         transform: translateY(-30px);
     }
 }
+@keyframes around {
+    100% {
+        transform: rotate(360deg);
+    }
+}

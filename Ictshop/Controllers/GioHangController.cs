@@ -186,13 +186,14 @@ namespace Ictshop.Controllers
             }
             //Thêm đơn hàng
             Nguoidung kh = (Nguoidung)Session["use"];
+            string orderInfo = "DH" + DateTime.Now.ToString("yyyyMMHHmmss");
 
             var ddh = new Donhang()
             {
                 MaNguoidung = kh.MaNguoiDung,
                 Ngaydat = DateTime.Now,
                 Tinhtrang = 0,
-                MaDonMoMo = "DONTRUCTIEP"
+                MaDonMoMo = orderInfo
             };
 
             List<GioHang> gh = LayGioHang();
@@ -423,6 +424,9 @@ namespace Ictshop.Controllers
         }
         #endregion
 
+        /**
+        * Hello Tao am Ho Minh 
+        * Chức năng thanh toán ví Ngân Lượng**/
         #region Thanh toán Ngân lượng
 
         public ActionResult ThanhToanNganLuong()

@@ -32,5 +32,19 @@ namespace Ictshop.Controllers
                                         .OrderByDescending(n => n.Madon);
             return View(donhangs.ToPagedList(pageNumber, pageSize));
         }
+
+        public ActionResult ChiTietDonHang(int id)
+        {
+            var u = Session["use"] as Ictshop.Models.Nguoidung;
+            if (u == null)
+            {
+                return RedirectToRoute("Default", new { controller = "Home", action = "Index" });
+            }
+
+            var donhangs = db.Chitietdonhangs.Where(c => c.Madon == id)
+                                            .ToList();
+            ViewBag.TongTien = 0;
+            return View(donhangs);
+        }
     }
 }

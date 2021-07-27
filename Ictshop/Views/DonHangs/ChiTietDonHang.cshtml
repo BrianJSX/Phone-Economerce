@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Ictshop.Models.Chitietdonhang>
+
+@{
+    ViewBag.Title = "ChiTietDonHang";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    decimal tongtien = 0;
+}
+
+<div class="cart">
+    <div style="display: flex; font-size: 1.6rem; padding-top: 2rem">
+        <div>
+            <a href="/DonHangs/Index"><< Quay lại đơn hàng</a>
+        </div>
+    </div>
+</div>
+<hr />
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Mã Đơn
+        </th>
+        <th>
+            Tên Sản Phẩm
+        </th>
+        <th>Ảnh bìa</th>
+        <th>
+            Số Lượng
+        </th>
+        <th>
+            Đơn giá
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        tongtien += Convert.ToDecimal(item.Soluong) * Convert.ToDecimal(item.Dongia);
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Donhang.MaDonMoMo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sanpham.Tensp)
+            </td>
+            <td>
+                <img src="~/HinhanhSP/@item.Sanpham.Anhbia" width="100px" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soluong)
+            </td>
+            <td>
+                @String.Format("{0:0,0}", item.Dongia) VNĐ
+            </td>
+            <td>
+            </td>
+
+        </tr>
+    }
+    <tr>
+        <td>
+            <b>Tổng Tiền: @String.Format("{0:0,0}", @tongtien) VNĐ</b>
+        </td>
+    </tr>
+
+</table>

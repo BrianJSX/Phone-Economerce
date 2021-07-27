@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "ChiTietDonHang";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    decimal tongtien = 0;
 }
 <div class="admin-content-main">
     <div class="admin-content-main-header">
@@ -14,7 +15,7 @@
         <button class="btn btn-primary"> << @Html.ActionLink("Quay lại đơn hàng", "Index")</button>
     </div>
     <div class="admin-content-main-body">
-        <table class="table">
+        <table class="table table-bordered">
             <tr>
                 <th>
                     Tên Sản Phẩm
@@ -35,6 +36,8 @@
 
             @foreach (var item in Model)
             {
+                tongtien += Convert.ToDecimal(item.Soluong) * Convert.ToDecimal(item.Dongia);
+
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.Sanpham.Tensp)
@@ -53,6 +56,11 @@
                     </td>
                 </tr>
             }
+            <tr>
+                <td>
+                    <b>Tổng Tiền: @String.Format("{0:0,0}", @tongtien) VNĐ</b>
+                </td>
+            </tr>
 
         </table>
     </div>

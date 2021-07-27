@@ -381,6 +381,7 @@
     <Content Include="Views\GioHang\DatHangThatBaiNL.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
     <Content Include="Views\DonHangs\Index.cshtml" />
+    <Content Include="Views\DonHangs\ChiTietDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
